@@ -1,13 +1,9 @@
 <template>
-  <div class="">
-    Home
-  </div>
+  <router-view />
 </template>
-
 <script lang="ts">
 import Vue from 'vue'
-
 export default Vue.extend({
-  name: 'Home'
+  name: 'default-layout'
 })
 </script>
