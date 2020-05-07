@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 const state = {
   title: '',
-  startDate: 0
+  basePath: `${window.location.protocol}//${window.location.host}`
 } as any
 
 const mutations: MutationTree<any> = {

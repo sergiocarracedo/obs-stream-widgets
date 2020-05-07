@@ -65,7 +65,6 @@ export default Vue.extend({
     Object.entries(widgets).forEach(([key, value]: any[]) => {
       if (value.settingsComponent) {
         const to = `Settings${key.substr(0, 1).toLocaleUpperCase()}${key.substr(1)}`
-        console.log(to)
         this.menu.push({
           name: value.metadata.name,
           icon: value.metadata.icon || 'mdi-gear',

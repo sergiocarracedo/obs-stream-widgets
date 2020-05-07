@@ -1,15 +1,18 @@
 <template>
   <div class="countdown">
-    {{ countdown.targetDateTime }}
+    {{ target}}
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import dayjs from 'dayjs'
+
 export default Vue.extend({
   name: 'countdown',
-  computed: {
-    ...mapState(['countdown'])
+  props: {
+    target: {
+      type: [Date, Number]
+    }
   }
 })
 </script>
