@@ -4,7 +4,10 @@ import dayjs from 'dayjs'
 
 const state: Map<any> = {
   targetDate: 0 as number,
-  targetTime: ''
+  targetTime: '',
+  textAfter: '',
+  textBefore: '',
+  clockColor: '#000000FF'
 }
 
 const mutations: MutationTree<Map<any>> = {
@@ -13,6 +16,15 @@ const mutations: MutationTree<Map<any>> = {
   },
   SOCKET_SET_TARGET_TIME: (state, target: string) => {
     state.targetTime = target
+  },
+  SOCKET_SET_TEXT_BEFORE: (state, payload: string) => {
+    state.textBefore = payload
+  },
+  SOCKET_SET_TEXT_AFTER: (state, payload: string) => {
+    state.textAfter = payload
+  },
+  SOCKET_SET_CLOCK_COLOR: (state, payload: string) => {
+    state.clockColor = payload
   }
 }
 

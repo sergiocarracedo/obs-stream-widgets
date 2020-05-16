@@ -1,0 +1,22 @@
+.countdown {
+  text-align: center;
+  -webkit-text-stroke: 1px #000;
+  min-height: 300px;
+  display: flex;
+  width: 100%;
+  > * {
+    width: 100%;
+  }
+  align-items: center;
+  header {
+    -webkit-text-stroke: 2px #000;
+  }
+  .clock {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    > * {
+      margin: 20px;
+    }
+  }
+}
