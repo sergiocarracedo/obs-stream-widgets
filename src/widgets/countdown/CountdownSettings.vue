@@ -89,27 +89,51 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="color"
+                  v-model="clockColor"
                   label="Color"
-                  hint="#RRGGBB"
+                  hint="#RRGGBBAA"
                   persistent-hint
                   prepend-icon="mdi-palette"
                   filled
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-color-picker v-if="menuColor" v-model="color"></v-color-picker>
+              <v-color-picker v-if="menuColor" v-model="clockColor"></v-color-picker>
+            </v-menu>
+          </v-col>
+          <v-col cols="12" lg="6">
+            <v-menu
+              ref="menuTrackColor"
+              v-model="menuTrackColor"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="clockTrackColor"
+                  label="Track Color"
+                  hint="#RRGGBBAA"
+                  persistent-hint
+                  prepend-icon="mdi-palette"
+                  filled
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-color-picker v-if="menuTrackColor" v-model="clockTrackColor"></v-color-picker>
             </v-menu>
           </v-col>
         </v-row>
       </v-card-text>
     </v-card>
-
     <countdown-widget
       :target="dateTime"
       :text-before="textBefore"
       :text-after="textAfter"
-      :color="color"
+      :color="clockColor"
+      :track-color="clockTrackColor"
     ></countdown-widget>
   </div>
 </template>
@@ -131,7 +155,7 @@ export default Vue.extend({
       menuDate: false,
       menuTime: false,
       menuColor: false,
-      color: '#fff',
+      menuTrackColor: false,
       dateFormatted: ''
     }
   },
@@ -150,7 +174,7 @@ export default Vue.extend({
           .set('month', +month - 1)
           .set('date', +day)
         this.$store.commit('countdown/SOCKET_SET_TARGET_DATE', dateTime)
-        console.log('date', dayjs(this.$store.state.countdown.targetDate).format('YYYY-DD-MM HH:mm'))
+        this.$socket.client.emit('SET_TARGET_DATE', dateTime)
       }
     },
     time: {
@@ -163,6 +187,7 @@ export default Vue.extend({
           .set('hour', +hours)
           .set('minute', +minutes)
         this.$store.commit('countdown/SOCKET_SET_TARGET_DATE', dateTime)
+        this.$socket.client.emit('SET_TARGET_DATE', dateTime)
       }
     },
     textBefore: {
@@ -171,6 +196,7 @@ export default Vue.extend({
       },
       set (value: string):void {
         this.$store.commit('countdown/SOCKET_SET_TEXT_BEFORE', value)
+        this.$socket.client.emit('SET_TEXT_BEFORE', value)
       }
     },
     textAfter: {
@@ -179,22 +205,29 @@ export default Vue.extend({
       },
       set (value: string):void {
         this.$store.commit('countdown/SOCKET_SET_TEXT_AFTER', value)
-        // this.$socket.client.emit('setTitle', value)
-        // this.$store.dispatch('socket_setTitle', value)
+        this.$socket.client.emit('SET_TEXT_AFTER', value)
       }
     },
     clockColor: {
       get (): string {
-        return this.$store.state.countdown.clockColor
+        return this.$store.state.countdown.clockColor || '#000000FF'
       },
       set (value: string):void {
         this.$store.commit('countdown/SOCKET_SET_CLOCK_COLOR', value)
-        // this.$socket.client.emit('setTitle', value)
-        // this.$store.dispatch('socket_setTitle', value)
+        this.$socket.client.emit('SET_CLOCK_COLOR', value)
+      }
+    },
+    clockTrackColor: {
+      get (): string {
+        return this.$store.state.countdown.clockTrackColor || '#00000020'
+      },
+      set (value: string):void {
+        this.$store.commit('countdown/SOCKET_SET_CLOCK_TRACK_COLOR', value)
+        this.$socket.client.emit('SET_CLOCK_TRACK_COLOR', value)
       }
     },
     widgetUrl () {
-      return `${this.$store.state.basePath}/countdown/`
+      return `${this.$store.state.basePath}/widget/countdown/`
     }
   },
   methods: {

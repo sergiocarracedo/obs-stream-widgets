@@ -9,6 +9,7 @@ files.keys().forEach((key: string) => {
   widgets[id] = {
     file: key,
     widgetComponent: files(key).widgetComponent,
+    widgetViewComponent: files(key).widgetViewComponent,
     settingsComponent: files(key).settingsComponent || null,
     store: files(key).store || null,
     metadata: files(key).metadata

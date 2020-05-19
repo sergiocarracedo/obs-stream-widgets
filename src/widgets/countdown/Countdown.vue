@@ -7,9 +7,9 @@
         </h1>
       </header>
       <div class="clock">
-        <clock-sphere :value="remain.hours" :max-value="24" units="Horas" :color="color"></clock-sphere>
-        <clock-sphere :value="remain.minutes" units="Minutos" :color="color"></clock-sphere>
-        <clock-sphere :value="remain.seconds" units="Segundos" :color="color"></clock-sphere>
+        <clock-sphere :value="remain.hours" :max-value="24" units="Horas" :color="color" :track-color="trackColor"></clock-sphere>
+        <clock-sphere :value="remain.minutes" units="Minutos" :color="color" :track-color="trackColor"></clock-sphere>
+        <clock-sphere :value="remain.seconds" units="Segundos" :color="color" :track-color="trackColor"></clock-sphere>
       </div>
     </div>
     <div class="countdown-after" v-if="isOver">
@@ -40,7 +40,8 @@ export default Vue.extend({
     },
     textBefore: String,
     textAfter: String,
-    color: String
+    color: String,
+    trackColor: String
   },
   data () {
     return {

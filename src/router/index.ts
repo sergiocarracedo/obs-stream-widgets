@@ -30,7 +30,7 @@ Object.entries(widgets).forEach(([key, value]: any[]) => {
   routes.push({
     path: `/widget/${key}`,
     name: `Widget${key.substr(0, 1).toLocaleUpperCase()}${key.substr(1)}`,
-    component: value.component
+    component: value.widgetViewComponent
   })
 })
 

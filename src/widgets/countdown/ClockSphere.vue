@@ -12,6 +12,7 @@
         :cy="size / 2"
         :r="radius"
         :stroke-width="width"
+        :stroke="trackColor"
         class="bg"
       />
 
@@ -58,7 +59,8 @@ export default Vue.extend({
       default: 10
     },
     units: String,
-    color: String
+    color: String,
+    trackColor: String
   },
   data () {
     return {
@@ -80,7 +82,7 @@ export default Vue.extend({
       return 2 * Math.PI * this.radius
     },
     strokeDashArray (): string {
-      return `${Math.round(this.circumference * 1000) / 1000}`
+      return `${Math.round(this.circumference * 1000) / 1000} `
     },
     normalizedValue (): number {
       const value = this.value / this.maxValue * 100
