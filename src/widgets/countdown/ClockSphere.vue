@@ -27,7 +27,7 @@
         :stroke="color"
         class="donut" />
     </svg>
-    <div class="clock-sphere-content">
+    <div class="clock-sphere-content" :style="{ 'color': textColor }">
       <h3>{{ value }}</h3>
       <span>{{ units }}</span>
     </div>
@@ -35,7 +35,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import './ClockSphere.scss'
+import './Sponsors.scss'
 interface Map<T> {
   [key:string]: T;
 }
@@ -59,8 +59,18 @@ export default Vue.extend({
       default: 10
     },
     units: String,
-    color: String,
-    trackColor: String
+    trackColor: {
+      type: String,
+      default: '#aaa'
+    },
+    color: {
+      type: String,
+      default: '#333'
+    },
+    textColor: {
+      type: String,
+      default: '#fff'
+    }
   },
   data () {
     return {

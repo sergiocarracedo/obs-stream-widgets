@@ -4,10 +4,12 @@
       <v-card-title class="heading">
         Countdown
       </v-card-title>
-
       <v-card-text>
-        <widget-url :url="widgetUrl"></widget-url>
-
+        <v-row>
+          <v-col cols="12" lg="6">
+            <widget-url :url="widgetUrl"></widget-url>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col cols="12" lg="12">
             <v-text-field
@@ -90,7 +92,7 @@
               <template v-slot:activator="{ on }">
                 <v-text-field
                   v-model="clockColor"
-                  label="Color"
+                  label="Clock Color"
                   hint="#RRGGBBAA"
                   persistent-hint
                   prepend-icon="mdi-palette"
@@ -125,6 +127,54 @@
               <v-color-picker v-if="menuTrackColor" v-model="clockTrackColor"></v-color-picker>
             </v-menu>
           </v-col>
+          <v-col cols="12" lg="6">
+            <v-menu
+              ref="menuClockTextColor"
+              v-model="menuClockTextColor"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="clockTextColor"
+                  label="Clock Text Color"
+                  hint="#RRGGBBAA"
+                  persistent-hint
+                  prepend-icon="mdi-palette"
+                  filled
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-color-picker v-if="menuClockTextColor" v-model="clockTextColor"></v-color-picker>
+            </v-menu>
+          </v-col>
+          <v-col cols="12" lg="6">
+            <v-menu
+              ref="menuTextColor"
+              v-model="menuTextColor"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="textColor"
+                  label="Text Color"
+                  hint="#RRGGBBAA"
+                  persistent-hint
+                  prepend-icon="mdi-palette"
+                  filled
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-color-picker v-if="menuTextColor" v-model="textColor"></v-color-picker>
+            </v-menu>
+          </v-col>
         </v-row>
       </v-card-text>
     </v-card>
@@ -134,6 +184,8 @@
       :text-after="textAfter"
       :color="clockColor"
       :track-color="clockTrackColor"
+      :clock-text-color="clockTextColor"
+      :text-color="textColor"
     ></countdown-widget>
   </div>
 </template>
@@ -145,7 +197,7 @@ import dayjs from 'dayjs'
 import './CountdownSettings.scss'
 
 export default Vue.extend({
-  name: 'general-settings',
+  name: 'countdown-settings',
   components: {
     WidgetUrl,
     CountdownWidget
@@ -156,6 +208,8 @@ export default Vue.extend({
       menuTime: false,
       menuColor: false,
       menuTrackColor: false,
+      menuTextColor: false,
+      menuClockTextColor: false,
       dateFormatted: ''
     }
   },
@@ -206,24 +260,6 @@ export default Vue.extend({
       set (value: string):void {
         this.$store.commit('countdown/SOCKET_SET_TEXT_AFTER', value)
         this.$socket.client.emit('SET_TEXT_AFTER', value)
-      }
-    },
-    clockColor: {
-      get (): string {
-        return this.$store.state.countdown.clockColor || '#000000FF'
-      },
-      set (value: string):void {
-        this.$store.commit('countdown/SOCKET_SET_CLOCK_COLOR', value)
-        this.$socket.client.emit('SET_CLOCK_COLOR', value)
-      }
-    },
-    clockTrackColor: {
-      get (): string {
-        return this.$store.state.countdown.clockTrackColor || '#00000020'
-      },
-      set (value: string):void {
-        this.$store.commit('countdown/SOCKET_SET_CLOCK_TRACK_COLOR', value)
-        this.$socket.client.emit('SET_CLOCK_TRACK_COLOR', value)
       }
     },
     widgetUrl () {

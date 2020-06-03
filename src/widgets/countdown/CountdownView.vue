@@ -3,8 +3,6 @@
     :target="targetDate"
     :text-before="textBefore"
     :text-after="textAfter"
-    :color="clockColor"
-    :track-color="clockTrackColor"
   ></countdown-widget>
 </template>
 <script lang="ts">
@@ -19,11 +17,11 @@ export default Vue.extend({
     CountdownWidget
   },
   computed: {
-    ...mapState(['targetDate', 'textAfter', 'textBefore', 'clockColor', 'clockTrackColor'])
-  },
-  mounted () {
-    console.log('mounted')
+    ...mapState([
+      'targetDate',
+      'textAfter',
+      'textBefore'
+    ])
   }
-
 })
 </script>

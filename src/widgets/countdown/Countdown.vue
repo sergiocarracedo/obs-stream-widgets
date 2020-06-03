@@ -7,9 +7,20 @@
         </h1>
       </header>
       <div class="clock">
-        <clock-sphere :value="remain.hours" :max-value="24" units="Horas" :color="color" :track-color="trackColor"></clock-sphere>
-        <clock-sphere :value="remain.minutes" units="Minutos" :color="color" :track-color="trackColor"></clock-sphere>
-        <clock-sphere :value="remain.seconds" units="Segundos" :color="color" :track-color="trackColor"></clock-sphere>
+        <clock-sphere
+          :value="remain.hours"
+          :max-value="24"
+          units="Horas"
+        ></clock-sphere>
+        <clock-sphere
+          :value="remain.minutes"
+          units="Minutos"
+          :color="color"
+        ></clock-sphere>
+        <clock-sphere
+          :value="remain.seconds"
+          units="Segundos"
+        ></clock-sphere>
       </div>
     </div>
     <div class="countdown-after" v-if="isOver">
@@ -39,9 +50,7 @@ export default Vue.extend({
       type: [Date, Number, String]
     },
     textBefore: String,
-    textAfter: String,
-    color: String,
-    trackColor: String
+    textAfter: String
   },
   data () {
     return {
@@ -51,12 +60,8 @@ export default Vue.extend({
         minutes: null as number|null,
         seconds: null as number|null
       },
+      isOver: false,
       dayjs
-    }
-  },
-  computed: {
-    isOver (): boolean {
-      return dayjs(this.target).isSameOrBefore(new Date(), 'second')
     }
   },
   methods: {
@@ -68,6 +73,10 @@ export default Vue.extend({
         minutes: date.diff(now, 'minute') % 60,
         seconds: date.diff(now, 'second') % 60
       }
+      this.checkIsOver()
+    },
+    checkIsOver () {
+      this.isOver = dayjs(this.target).isSameOrBefore(new Date(), 'second')
     }
   },
   beforeMount () {

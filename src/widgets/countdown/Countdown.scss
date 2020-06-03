@@ -1,4 +1,7 @@
+@import '../_variables.scss';
+
 .countdown {
+  font-family: $primary-font;
   text-align: center;
   -webkit-text-stroke: 1px #000;
   min-height: 300px;
@@ -18,5 +21,15 @@
     > * {
       margin: 20px;
     }
+
+    .clock-sphere {
+      .bg {
+        stroke: $primary-color-light;
+      }
+      .donut {
+        stroke: $primary-color;
+      }
+    }
   }
+
 }
