@@ -1,16 +1,19 @@
 <template>
   <div class="sponsors">
-    <sponsor
-      v-for="(sponsor, index) in sponsors"
-      :key="index"
-      :sponsor="sponsor"
-    ></sponsor>
+    <transition name="fade" mode="out-in" v-if="sponsor">
+      <sponsor
+        :key="sponsor.name"
+        :sponsor="sponsor"
+      ></sponsor>
+    </transition>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Sponsor from './Sponsor.vue'
 import './Sponsors.scss'
+import { Map } from '@/interfaces'
+import { Sponsor as SponsorType } from './types'
 
 export default Vue.extend({
   name: 'sponsors',
@@ -19,21 +22,31 @@ export default Vue.extend({
   },
   props: {
     sponsors: {
-      type: Array
+      type: Array as () => SponsorType[]
+    },
+    timeout: {
+      type: Number,
+      default: 5000
     }
   },
   data () {
     return {
-      intervalId: null as number|null
+      intervalId: null as number|null,
+      index: 0 as number
+    }
+  },
+  computed: {
+    sponsor (): Map<any> {
+      return this.sponsors[this.index % this.sponsors.length] || {} as Map<any>
     }
   },
   methods: {
     handler () {
-      console.log('handler')
+      this.index++
     }
   },
   beforeMount () {
-    this.intervalId = setInterval(this.handler, 1000)
+    this.intervalId = setInterval(this.handler, this.timeout)
   },
   beforeDestroy () {
     clearInterval(this.intervalId as number)

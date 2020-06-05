@@ -1,5 +1,5 @@
 <template>
-  <div class="countdown-settings">
+  <div class="sponsors-settings">
     <v-card class="mb-8">
       <v-card-title class="heading">
         Sponsors
@@ -16,27 +16,31 @@
           <v-col cols="12" lg="5">
             <v-text-field v-model="sponsor.name" label="Name" filled></v-text-field>
           </v-col>
-          <v-col cols="12" lg="5">
+          <v-col cols="12" lg="3">
             <v-file-input
-              v-model="sponsor.logo"
               accept="image/*"
               label="Logo"
               filled
               @change="onFileChange($event, index)"
             ></v-file-input>
           </v-col>
-          <v-col cols="12" lg="2">
-            <v-btn color="red" icon @click="removeSponsor(index)">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-            <v-img :src="sponsor.logoSrc" contain max-width="60" max-height="60"></v-img>
+          <v-col cols="12" lg="4" class="align-self-center">
+            <div class="d-flex align-center align-self-center">
+              <v-img :src="sponsor.logo" contain max-width="60" max-height="60"></v-img>
+              <v-spacer></v-spacer>
+              <v-btn color="red" icon @click="removeSponsor(index)">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </div>
           </v-col>
         </v-row>
       </v-card-text>
     </v-card>
-    <sponsors-widget
-      :sponsors="sponsors"
-    ></sponsors-widget>
+    <div class="demo-wrapper">
+      <sponsors-widget
+        :sponsors="sponsors"
+      ></sponsors-widget>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -68,23 +72,29 @@ export default Vue.extend({
   methods: {
     addSponsor () {
       this.localSponsors.push({
-        logo: {} as any,
-        logoSrc: '',
+        logo: '',
         name: 'New Sponsor'
       })
     },
     removeSponsor (index: number) {
       this.sponsors = this.sponsors.splice(index - 1, 1)
     },
-    onFileChange (e: File, index: number) {
-      this.sponsors[index].logoSrc = e ? URL.createObjectURL(e) : ''
+    async onFileChange (e: File, index: number) {
+      const toBase64 = (file: File) => new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
+      })
+
+      this.sponsors[index].logo = (await toBase64(e)) as string
     }
   },
   watch: {
     localSponsors: {
       deep: true,
       handler (newValue) {
-        this.$store.commit('sponsors/SOCKET_SET_SPONSORS', newValue)
+        this.$store.commit('brand/SOCKET_SET_SPONSORS', newValue)
         this.$socket.client.emit('SET_SPONSORS', newValue)
       }
     }

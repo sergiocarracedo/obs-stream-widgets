@@ -8,6 +8,7 @@ import vuetify from '@/plugins/vuetify'
 import io from 'socket.io-client'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
+import './assets/scss/app.scss'
 
 Vue.use(VueCompositionApi)
 

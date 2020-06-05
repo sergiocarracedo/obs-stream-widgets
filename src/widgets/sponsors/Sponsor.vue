@@ -1,7 +1,6 @@
 <template>
   <div class="sponsor">
-     {{ sponsor.name }}
-    <img :src="sponsor.logoSrc" :alt="sponsor.name" />
+    <img :src="sponsor.logo" :alt="sponsor.name" />
   </div>
 </template>
 <script lang="ts">

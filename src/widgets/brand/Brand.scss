@@ -1,13 +1,17 @@
 @import '../_variables.scss';
 
-.sponsors {
+.brand {
   font-family: $primary-font;
   text-align: center;
-  background: $primary-color;
-  height: 100px;
+  height: 300px;
   width: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 15px;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }

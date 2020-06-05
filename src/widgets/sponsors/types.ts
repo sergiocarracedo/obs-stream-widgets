@@ -1,5 +1,4 @@
 export interface Sponsor {
-  logo: File,
-  name: String,
-  logoSrc: String
+  logo: String,
+  name: String
 }
