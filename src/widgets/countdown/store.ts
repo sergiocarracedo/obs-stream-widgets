@@ -1,5 +1,5 @@
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Map } from '@/interfaces'
+import { Map } from '@/types'
 import dayjs from 'dayjs'
 
 const state: Map<any> = {

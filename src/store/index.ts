@@ -2,27 +2,22 @@ import Vue from 'vue'
 import Vuex, { MutationTree, ActionTree, ModuleTree } from 'vuex'
 import widgets from '@/widgets'
 import VuexPersistedState from 'vuex-persistedstate'
+import { Youtube } from '@/types'
 
 Vue.use(Vuex)
 
 const state = {
-  title: '',
-  basePath: `${window.location.protocol}//${window.location.host}`
+  basePath: `${window.location.protocol}//${window.location.host}`,
+  youtube: {} as Youtube
 } as any
 
 const mutations: MutationTree<any> = {
-  loading: (state, data) => {
-    state.loading = data
-  },
-  SOCKET_SETTITLE: (state, title: string) => {
-    state.title = title
+  SOCKET_SET_YOUTUBE: (state, youtube: Youtube) => {
+    state.youtube = youtube
   }
 }
 
 const actions: ActionTree<string, any> = {
-  'socket_setTitle': (state, title: string) => {
-    state.commit('SOCKET_SETTITLE', title)
-  }
 }
 
 const modules = {} as ModuleTree<string>

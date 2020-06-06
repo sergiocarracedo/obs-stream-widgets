@@ -1,2 +1,13 @@
 @import "variables";
 @import "transitions";
+
+
+html.widget-wrapper {
+  overflow: hidden;
+}
+
+html,
+body {
+  background: transparent;
+}
+

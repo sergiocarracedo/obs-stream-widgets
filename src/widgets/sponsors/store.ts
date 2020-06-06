@@ -1,5 +1,5 @@
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Map } from '@/interfaces'
+import { Map } from '@/types'
 import { Sponsor } from './types'
 
 const state: Map<any> = {

@@ -12,7 +12,7 @@
 import Vue from 'vue'
 import Sponsor from './Sponsor.vue'
 import './Sponsors.scss'
-import { Map } from '@/interfaces'
+import { Map } from '@/types'
 import { Sponsor as SponsorType } from './types'
 
 export default Vue.extend({

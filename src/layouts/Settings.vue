@@ -51,7 +51,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import widgets from '@/widgets'
-import { Map } from '@/interfaces'
+import { Map } from '@/types'
 
 export default Vue.extend({
   name: 'settings-layout',
@@ -62,12 +62,19 @@ export default Vue.extend({
     }
   },
   beforeMount (): void {
+    document.body.classList.add('settings')
+    this.menu.push({
+      name: 'Global',
+      icon: 'mdi-wrench',
+      to: '/'
+    })
+
     Object.entries(widgets).forEach(([key, value]: any[]) => {
       if (value.settingsComponent) {
         const to = `Settings${key.substr(0, 1).toLocaleUpperCase()}${key.substr(1)}`
         this.menu.push({
           name: value.metadata.name,
-          icon: value.metadata.icon || 'mdi-gear',
+          icon: value.metadata.icon || 'mdi-cog',
           to
         })
       }

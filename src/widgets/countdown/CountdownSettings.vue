@@ -47,7 +47,6 @@
                   persistent-hint
                   prepend-icon="mdi-calendar"
                   filled
-                  @blur="date = parseDate(dateFormatted)"
                   v-on="on"
                 ></v-text-field>
               </template>
@@ -78,114 +77,14 @@
               <v-time-picker v-if="menuTime" v-model="time" scrollable no-title format="24h" @click:minute="menuTime = false"></v-time-picker>
             </v-menu>
           </v-col>
-
-          <v-col cols="12" lg="6">
-            <v-menu
-              ref="menuColor"
-              v-model="menuColor"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="clockColor"
-                  label="Clock Color"
-                  hint="#RRGGBBAA"
-                  persistent-hint
-                  prepend-icon="mdi-palette"
-                  filled
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-color-picker v-if="menuColor" v-model="clockColor"></v-color-picker>
-            </v-menu>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-menu
-              ref="menuTrackColor"
-              v-model="menuTrackColor"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="clockTrackColor"
-                  label="Track Color"
-                  hint="#RRGGBBAA"
-                  persistent-hint
-                  prepend-icon="mdi-palette"
-                  filled
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-color-picker v-if="menuTrackColor" v-model="clockTrackColor"></v-color-picker>
-            </v-menu>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-menu
-              ref="menuClockTextColor"
-              v-model="menuClockTextColor"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="clockTextColor"
-                  label="Clock Text Color"
-                  hint="#RRGGBBAA"
-                  persistent-hint
-                  prepend-icon="mdi-palette"
-                  filled
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-color-picker v-if="menuClockTextColor" v-model="clockTextColor"></v-color-picker>
-            </v-menu>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-menu
-              ref="menuTextColor"
-              v-model="menuTextColor"
-              :close-on-content-click="false"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="textColor"
-                  label="Text Color"
-                  hint="#RRGGBBAA"
-                  persistent-hint
-                  prepend-icon="mdi-palette"
-                  filled
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-color-picker v-if="menuTextColor" v-model="textColor"></v-color-picker>
-            </v-menu>
-          </v-col>
         </v-row>
       </v-card-text>
     </v-card>
+    <v-alert type="info" border="left" color="yellow" text>Size min 800x400px</v-alert>
     <countdown-widget
       :target="dateTime"
       :text-before="textBefore"
       :text-after="textAfter"
-      :color="clockColor"
-      :track-color="clockTrackColor"
-      :clock-text-color="clockTextColor"
-      :text-color="textColor"
     ></countdown-widget>
   </div>
 </template>
@@ -206,10 +105,6 @@ export default Vue.extend({
     return {
       menuDate: false,
       menuTime: false,
-      menuColor: false,
-      menuTrackColor: false,
-      menuTextColor: false,
-      menuClockTextColor: false,
       dateFormatted: ''
     }
   },
@@ -227,6 +122,7 @@ export default Vue.extend({
           .set('year', +year)
           .set('month', +month - 1)
           .set('date', +day)
+
         this.$store.commit('countdown/SOCKET_SET_TARGET_DATE', dateTime)
         this.$socket.client.emit('SET_TARGET_DATE', dateTime)
       }
@@ -273,6 +169,7 @@ export default Vue.extend({
   },
   watch: {
     date (val: string):void {
+      console.log(val, dayjs(val).format('DD/MM/YYYY'))
       this.dateFormatted = dayjs(val).format('DD/MM/YYYY')
     }
   },

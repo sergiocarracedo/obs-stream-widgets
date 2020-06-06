@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import widgets from '@/widgets'
-import Home from '../views/Home.vue'
+import GlobalSettings from '../views/Settings/Global.vue'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home,
+    path: '/settings',
+    name: 'GlobalSettings',
+    component: GlobalSettings,
     meta: {
       layout: 'settings'
     }
@@ -38,6 +38,13 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/') {
+    next('/settings')
+  }
+  next()
 })
 
 export default router

@@ -1,7 +1,5 @@
 <template>
-  <div class="sponsor">
-    <img :src="sponsor.logo" :alt="sponsor.name" />
-  </div>
+  <div class="sponsor" :style="{ 'background-image': `url(${sponsor.logo})` }"></div>
 </template>
 <script lang="ts">
 import Vue from 'vue'

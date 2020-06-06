@@ -36,6 +36,7 @@
         </v-row>
       </v-card-text>
     </v-card>
+    <v-alert type="info" border="left" color="yellow" text>Size 300x100px</v-alert>
     <div class="demo-wrapper">
       <sponsors-widget
         :sponsors="sponsors"
@@ -94,7 +95,8 @@ export default Vue.extend({
     localSponsors: {
       deep: true,
       handler (newValue) {
-        this.$store.commit('brand/SOCKET_SET_SPONSORS', newValue)
+        console.log('SET ESPONSRS')
+        this.$store.commit('sponsors/SOCKET_SET_SPONSORS', newValue)
         this.$socket.client.emit('SET_SPONSORS', newValue)
       }
     }

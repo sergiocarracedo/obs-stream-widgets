@@ -9,7 +9,7 @@
 import Vue from 'vue'
 import SponsorsWidget from './Sponsors.vue'
 import { createNamespacedHelpers } from 'vuex'
-const { mapState } = createNamespacedHelpers('brand')
+const { mapState } = createNamespacedHelpers('sponsors')
 
 export default Vue.extend({
   name: 'countdown-view',
@@ -18,7 +18,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState([
-      'brand'
+      'sponsors'
     ])
   }
 })

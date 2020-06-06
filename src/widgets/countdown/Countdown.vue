@@ -15,7 +15,6 @@
         <clock-sphere
           :value="remain.minutes"
           units="Minutos"
-          :color="color"
         ></clock-sphere>
         <clock-sphere
           :value="remain.seconds"
