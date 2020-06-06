@@ -5,9 +5,9 @@
 yarn
 ```
 
-### Compiles and hot-reloads for development
+### Run APP and server
 ```
-yarn serve
+yarn start
 ```
 
 
