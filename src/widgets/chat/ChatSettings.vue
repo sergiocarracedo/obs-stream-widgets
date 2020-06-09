@@ -19,6 +19,7 @@
     <div class="demo-wrapper">
       <chat-widget
         :youtube-settings="youtubeSettings"
+        :twitch-settings="twitchSettings"
         :test-mode="true"
       ></chat-widget>
     </div>
@@ -29,7 +30,7 @@ import Vue from 'vue'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import ChatWidget from './Chat.vue'
 import './ChatSettings.scss'
-import { Youtube } from '@/types'
+import { Twitch, Youtube } from '@/types'
 
 export default Vue.extend({
   name: 'chat-settings',
@@ -43,6 +44,9 @@ export default Vue.extend({
     },
     youtubeSettings (): Youtube {
       return this.$store.state.youtube as Youtube
+    },
+    twitchSettings (): Twitch {
+      return this.$store.state.twitch as Twitch
     }
   },
   methods: {

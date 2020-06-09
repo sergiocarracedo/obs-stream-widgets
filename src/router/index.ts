@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/settings',
+    path: '/settings/global',
     name: 'GlobalSettings',
     component: GlobalSettings,
     meta: {
@@ -42,7 +42,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.path === '/') {
-    next('/settings')
+    next('/settings/global')
   }
   next()
 })

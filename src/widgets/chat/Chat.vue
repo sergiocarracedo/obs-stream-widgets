@@ -12,10 +12,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import './Chat.scss'
-import { Youtube, Map } from '@/types'
+import { Youtube, Map, Twitch } from '@/types'
 import YouTubeChat from 'youtube-live-chat'
 import takeRight from 'lodash/takeRight'
 import { ChatMessage } from './types'
+import TwitchClient from 'twitch'
+import TwitchChatClient from 'twitch-chat-client'
+
 
 const testMessages = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -56,11 +59,14 @@ export default Vue.extend({
   name: 'chat',
   props: {
     youtubeSettings: {} as () => Youtube,
+    twitchSettings: {} as () => Twitch,
     testMode: Boolean
   },
   data () {
     return {
-      youtubeChat: null as any,
+      youtubeChatClient: null as any,
+      twitchClient: null as any,
+      twitchChatClient: null as any,
       messages: [] as ChatMessage[],
       testInterval: null as number | null
     }
@@ -86,19 +92,26 @@ export default Vue.extend({
         })
       }, 1000)
     } else {
-      this.youtubeChat = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
+      // this.twitchClient = TwitchClient.withClientCredentials(this.twitchSettings.clientId, this.twitchSettings.clientSecret)
+      //
+      // const options = {
+      //   channels: ['iamcristinini']
+      // }
+      // this.twitchChatClient = new TwitchChatClient(this.twitchClient, options)
 
-      this.youtubeChat.on('ready', () => {
-        this.youtubeChat.listen(5000)
+      this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
+
+      this.youtubeChatClient.on('ready', () => {
+        this.youtubeChatClient.listen(5000)
       })
 
-      this.youtubeChat.on('message', (data: any) => {
+      this.youtubeChatClient.on('message', (data: any) => {
         this.insertMessage(data.snippet)
       })
 
-      this.youtubeChat.on('error', (error: any) => {
+      this.youtubeChatClient.on('error', (error: any) => {
         if (error.error.code === 403) {
-          this.youtubeChat.stop()
+          this.youtubeChatClient.stop()
           console.error('API LIMIT EXCEEDED')
         } else {
           console.error(error)
@@ -110,7 +123,7 @@ export default Vue.extend({
     if (this.testMode) {
       clearInterval(this.testInterval!)
     } else {
-      this.youtubeChat.stop()
+      this.youtubeChatClient.stop()
     }
   }
 })

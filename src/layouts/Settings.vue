@@ -66,7 +66,7 @@ export default Vue.extend({
     this.menu.push({
       name: 'Global',
       icon: 'mdi-wrench',
-      to: '/'
+      to: 'GlobalSettings'
     })
 
     Object.entries(widgets).forEach(([key, value]: any[]) => {
