@@ -1,0 +1,7 @@
+{
+  "name": "widget-chat",
+  "version": "1.0.0",
+  "dependencies": {
+    "vue2-animate": "^2.1.3"
+  }
+}
