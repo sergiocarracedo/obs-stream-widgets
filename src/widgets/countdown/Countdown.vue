@@ -79,7 +79,7 @@ export default Vue.extend({
     }
   },
   beforeMount () {
-    this.intervalId = setInterval(this.handler, 1000)
+    this.intervalId = <any>setInterval(this.handler, 1000)
   },
   beforeDestroy () {
     clearInterval(this.intervalId as number)

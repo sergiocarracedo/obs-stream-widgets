@@ -14,7 +14,7 @@ Vue.use(VueCompositionApi)
 
 // export const SocketInstance = socketio(process.env.VUE_APP_SOCKET)
 // Vue.use(VueSocketIO, SocketInstance)
-const socket = io(process.env.VUE_APP_SOCKET)
+const socket = io(process.env.VUE_APP_SOCKET as string)
 
 Vue.use(VueSocketIO, socket, { store })
 

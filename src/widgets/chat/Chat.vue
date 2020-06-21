@@ -85,7 +85,7 @@ export default Vue.extend({
   },
   beforeMount () {
     if (this.testMode) {
-      this.testInterval = setInterval(() => {
+      this.testInterval = <any>setInterval(() => {
         this.insertMessage({
           liveChatId: (Math.random() * 100000).toFixed(0),
           displayMessage: testMessages[Math.floor(Math.random() * testMessages.length)]
