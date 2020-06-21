@@ -79,6 +79,12 @@ export default Vue.extend({
         })
       }
     })
+
+    this.menu.push({
+      name: 'Import-Export',
+      icon: 'mdi-swap-vertical',
+      to: 'ImportExportSettings'
+    })
   }
 })
 </script>

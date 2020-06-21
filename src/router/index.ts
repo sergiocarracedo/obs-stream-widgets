@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import widgets from '@/widgets'
 import GlobalSettings from '../views/Settings/Global.vue'
+import ImportExportSettings from '../views/Settings/ImportExport.vue'
 
 Vue.use(VueRouter)
 
@@ -10,6 +11,14 @@ const routes: Array<RouteConfig> = [
     path: '/settings/global',
     name: 'GlobalSettings',
     component: GlobalSettings,
+    meta: {
+      layout: 'settings'
+    }
+  },
+  {
+    path: '/settings/import-export',
+    name: 'ImportExportSettings',
+    component: ImportExportSettings,
     meta: {
       layout: 'settings'
     }

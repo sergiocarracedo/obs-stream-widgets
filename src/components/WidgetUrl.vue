@@ -17,7 +17,7 @@
     >
       Url copied to clipboard
       <v-btn
-        color="primart"
+        color="primary"
         text
         @click="snackbar = false"
       >

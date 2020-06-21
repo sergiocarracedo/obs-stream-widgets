@@ -78,7 +78,7 @@ export default Vue.extend({
       })
     },
     removeSponsor (index: number) {
-      this.sponsors = this.sponsors.splice(index - 1, 1)
+      this.sponsors = this.sponsors.splice(index, 1)
     },
     async onFileChange (e: File, index: number) {
       const toBase64 = (file: File) => new Promise((resolve, reject) => {
@@ -95,7 +95,6 @@ export default Vue.extend({
     localSponsors: {
       deep: true,
       handler (newValue) {
-        console.log('SET ESPONSRS')
         this.$store.commit('sponsors/SOCKET_SET_SPONSORS', newValue)
         this.$socket.client.emit('SET_SPONSORS', newValue)
       }
