@@ -2,7 +2,6 @@
   "name": "@obs-stream-widgets",
   "version": "0.2.1",
   "private": true,
-  "useWorkspaces": true,
   "dependencies": {
     "@mdi/font": "^3.6.95",
     "@vue/composition-api": "^0.5.0",
