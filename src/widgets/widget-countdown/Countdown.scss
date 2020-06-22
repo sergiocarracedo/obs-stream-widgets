@@ -1,0 +1,42 @@
+@import '../variables';
+
+.countdown {
+  font-family: $primary-font;
+  text-align: center;
+  -webkit-text-stroke: 1px #000;
+  height: 300px;
+  display: flex;
+  width: 100%;
+  color: $text-color;
+  > * {
+    width: 100%;
+  }
+  align-items: center;
+  header {
+    -webkit-text-stroke: 1px #000;
+  }
+  .clock {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    > * {
+      margin: 20px;
+    }
+
+    .clock-sphere {
+      .bg {
+        stroke: $primary-color-light;
+      }
+      .donut {
+        stroke: $primary-color;
+      }
+      .clock-sphere-content {
+        span {
+          -webkit-text-stroke: 0;
+          text-shadow: $black 0 0 4px;
+        }
+      }
+    }
+  }
+
+}

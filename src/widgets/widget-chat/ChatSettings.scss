@@ -1,0 +1,16 @@
+@import '../variables';
+.chat-settings {
+  .demo-wrapper {
+    background: #fff url(~@/assets/i/bg.png);
+    height: 450px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .chat {
+      color: $black !important;
+      height: 400px;
+    }
+  }
+}
