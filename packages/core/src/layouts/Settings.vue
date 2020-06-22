@@ -29,7 +29,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <v-container
         fluid
         class="content"
@@ -42,7 +42,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
     <v-footer app>
       <span>Made with <span class="primary">❤</span>️ by <a href="https://sergiocarracedo.es">Sergio Carracedo</a></span>
     </v-footer>
@@ -51,7 +51,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import widgets from '../widgets'
-import { Map } from '../types'
+import { Map } from '@obs-stream-widgets/core-utils/types'
+
 
 export default Vue.extend({
   name: 'settings-layout',

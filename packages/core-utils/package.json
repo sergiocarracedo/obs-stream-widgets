@@ -1,0 +1,10 @@
+{
+  "name": "@obs-stream-widgets/core-utils",
+  "version": "1.0.0",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "typescript": "~3.8.3"
+  }
+}

@@ -3,7 +3,15 @@
     <ul>
       <transition-group name="fadeRight">
         <li v-for="message in messages" :key="message.id">
-          {{ message.content }}
+          <div class="profile-image">
+            <img :src="message.author.profileImageUrl" />
+          </div>
+          <span class="author">
+            {{ message.author.name }}
+          </span>
+          <span class="message">
+            {{ message.content }}
+          </span>
         </li>
       </transition-group>
     </ul>
@@ -18,7 +26,6 @@ import takeRight from 'lodash/takeRight'
 import { ChatMessage } from './types'
 import TwitchClient from 'twitch'
 import TwitchChatClient from 'twitch-chat-client'
-
 
 const testMessages = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -55,6 +62,11 @@ const testMessages = [
   'In ut arcu eget ex condimentum blandit.'
 ]
 
+const testAuthors = [
+  'Silvia Alonso', 'Catalina Rey', 'Cristina', 'H4ckerM4n0', 'Juan Antonio', 'Michael', 'Alfredo Landa', 'Mario Montera', ''
+]
+
+
 export default Vue.extend({
   name: 'chat',
   props: {
@@ -72,11 +84,12 @@ export default Vue.extend({
     }
   },
   methods: {
-    insertMessage (message: Map<any>) {
-      const id = message.liveChatId as string
+    insertMessage (id:string, author: Map<any>, message: string) {
+      console.log(message)
       if (this.messages.findIndex((item: ChatMessage) => item.id === id) === -1) {
         this.messages.push({
-          content: message.displayMessage,
+          content: message,
+          author: author,
           id
         })
       }
@@ -86,11 +99,17 @@ export default Vue.extend({
   beforeMount () {
     if (this.testMode) {
       this.testInterval = setInterval(() => {
-        this.insertMessage({
-          liveChatId: (Math.random() * 100000).toFixed(0),
-          displayMessage: testMessages[Math.floor(Math.random() * testMessages.length)]
-        })
-      }, 1000)
+        const author = {
+          name: testAuthors[Math.floor(Math.random() * testAuthors.length)],
+          profileImageUrl: 'https://i.pravatar.cc/30'
+        }
+
+        this.insertMessage(
+          (Math.random() * 100000).toFixed(0),
+          author,
+          testMessages[Math.floor(Math.random() * testMessages.length)]
+        )
+      }, 2300)
     } else {
       // this.twitchClient = TwitchClient.withClientCredentials(this.twitchSettings.clientId, this.twitchSettings.clientSecret)
       //
@@ -99,17 +118,25 @@ export default Vue.extend({
       // }
       // this.twitchChatClient = new TwitchChatClient(this.twitchClient, options)
 
-      this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
 
+      this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
       this.youtubeChatClient.on('ready', () => {
+        console.log('ready')
         this.youtubeChatClient.listen(5000)
       })
 
       this.youtubeChatClient.on('message', (data: any) => {
-        this.insertMessage(data.snippet)
+        console.log('message')
+        console.log(data)
+        const author = {
+          name: data.authorDetails.displayName,
+          profileImageUrl: data.authorDetails.profileImageUrl
+        }
+        this.insertMessage(data.id, author, data.snippet.displayMessage)
       })
 
       this.youtubeChatClient.on('error', (error: any) => {
+        console.log(error)
         if (error.error.code === 403) {
           this.youtubeChatClient.stop()
           console.error('API LIMIT EXCEEDED')

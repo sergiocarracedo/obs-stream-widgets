@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex, { MutationTree, ActionTree, ModuleTree } from 'vuex'
 import widgets from '../widgets'
 import VuexPersistedState from 'vuex-persistedstate'
-import { Twitch, Youtube } from '../types'
+import { Twitch, Youtube } from '@obs-stream-widgets/core-utils/types'
 
 Vue.use(Vuex)
 

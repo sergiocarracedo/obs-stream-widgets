@@ -51,7 +51,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { Youtube, Twitch } from '../../types'
+import { Youtube, Twitch } from '@obs-stream-widgets/core-utils/types'
 import { mapState } from 'vuex'
 
 export default Vue.extend({

@@ -1,6 +1,6 @@
 {
-  "name": "widget-countdown",
-  "version": "1.0.0",
+  "name": "@obs-stream-widgets/widget-countdown",
+  "version": "0.0.1",
   "dependencies": {
 
   }

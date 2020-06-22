@@ -43,6 +43,7 @@ Object.entries(widgets).forEach(([key, value]: any[]) => {
   })
 })
 
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

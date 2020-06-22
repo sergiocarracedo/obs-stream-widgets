@@ -1,5 +1,5 @@
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Map } from '../core/src/types'
+import { Map } from '../core-utils/types'
 
 const state: Map<any> = {
   logo: String

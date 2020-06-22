@@ -5,8 +5,7 @@ $animationDuration: 0.3s;
 .chat {
   font-family: $primary-font;
   text-align: center;
-  text-shadow: 0 0 4px $black;
-  height: 400px;
+  height: 100vh;
   width: 100%;
   max-width: 500px;
   color: $text-color;
@@ -27,7 +26,36 @@ $animationDuration: 0.3s;
     flex-direction: column-reverse;
 
     li {
-      margin-bottom: 7px;
+      margin-bottom: 6px;
+      background: rgba($primary-color, .9);
+      color: $text-color;
+      padding: 10px;
+      padding-left: 46px;
+      position: relative;
+
+      .profile-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        overflow: hidden;
+        background: $primary-color-light;
+        text-align: center;
+        img {
+          width: 30px;
+          height: auto;
+        }
+      }
+      .message {
+        font-weight: bold;
+      }
+
+      .author {
+        margin-right: 6px;
+      }
+
     }
   }
 }
