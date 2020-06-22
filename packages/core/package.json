@@ -1,7 +1,6 @@
 {
   "name": "@obs-stream-widgets/core",
   "version": "0.2.1",
-  "private": true,
   "scripts": {
     "start": "concurrently -n VUE,SOCKET_SERVER \"yarn serve\" \"node server.js\"",
     "serve": "vue-cli-service serve",
@@ -33,7 +32,6 @@
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
-    "@obs-stream-widgets/core-uitls": "*",
     "@types/jest": "^24.0.19",
     "@types/lodash": "^4.14.155",
     "@types/socket.io": "^2.1.4",
