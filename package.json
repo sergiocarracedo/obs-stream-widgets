@@ -1,6 +1,10 @@
 {
   "name": "@obs-stream-widgets",
-  "private": true,
+  "author": {
+    "name": "Sergio Carracedo",
+    "email": "hi@sergiocarracedo.es"
+  },
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "lerna": "^3.22.1"
   },

@@ -1,6 +1,11 @@
 {
   "name": "@obs-stream-widgets/widget-chat",
   "version": "0.2.1",
+  "author": {
+    "name": "Sergio Carracedo",
+    "email": "hi@sergiocarracedo.es"
+  },
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "lodash": "^4.17.15",
     "twitch": "^4.0.10",

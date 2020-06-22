@@ -1,6 +1,11 @@
 {
   "name": "@obs-stream-widgets/core",
   "version": "0.2.1",
+  "author": {
+    "name": "Sergio Carracedo",
+    "email": "hi@sergiocarracedo.es"
+  },
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "start": "concurrently -n VUE,SOCKET_SERVER \"yarn serve\" \"node server.js\"",
     "serve": "vue-cli-service serve",

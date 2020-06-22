@@ -1,6 +1,11 @@
 {
   "name": "@obs-stream-widgets/widget-sponsors",
   "version": "0.2.1",
+  "author": {
+    "name": "Sergio Carracedo",
+    "email": "hi@sergiocarracedo.es"
+  },
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "vue": "^2.6.11",
     "vuex": "^3.4.0"
