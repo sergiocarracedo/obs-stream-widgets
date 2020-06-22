@@ -85,7 +85,6 @@ export default Vue.extend({
   },
   methods: {
     insertMessage (id:string, author: Map<any>, message: string) {
-      console.log(message)
       if (this.messages.findIndex((item: ChatMessage) => item.id === id) === -1) {
         this.messages.push({
           content: message,
@@ -121,13 +120,10 @@ export default Vue.extend({
 
       this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
       this.youtubeChatClient.on('ready', () => {
-        console.log('ready')
         this.youtubeChatClient.listen(5000)
       })
 
       this.youtubeChatClient.on('message', (data: any) => {
-        console.log('message')
-        console.log(data)
         const author = {
           name: data.authorDetails.displayName,
           profileImageUrl: data.authorDetails.profileImageUrl
@@ -136,7 +132,6 @@ export default Vue.extend({
       })
 
       this.youtubeChatClient.on('error', (error: any) => {
-        console.log(error)
         if (error.error.code === 403) {
           this.youtubeChatClient.stop()
           console.error('API LIMIT EXCEEDED')
