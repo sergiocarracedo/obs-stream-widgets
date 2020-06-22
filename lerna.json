@@ -2,10 +2,8 @@
   "name": "@obs-stream-widgets",
   "version": "0.2.1",
   "private": true,
+  "useWorkspaces": true,
   "workspaces": [
-    "packages/*"
-  ],
-  "packages": [
     "packages/*"
   ],
   "dependencies": {
