@@ -4,5 +4,8 @@
   "dependencies": {
     "vue": "^2.6.11",
     "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@obs-stream-widgets/core-uitls": "*"
   }
 }

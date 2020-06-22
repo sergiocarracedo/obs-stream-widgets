@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "@obs-stream-widgets",
   "private": true,
   "devDependencies": {
     "lerna": "^3.22.1"
