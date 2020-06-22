@@ -2,6 +2,6 @@
   "name": "@obs-stream-widgets/widget-brand",
   "version": "0.2.1",
   "devDependencies": {
-    "@obs-stream-widgets/core-uitls": "*"
+    "@obs-stream-widgets/core-utils": "*"
   }
 }

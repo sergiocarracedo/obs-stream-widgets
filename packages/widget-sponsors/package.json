@@ -11,6 +11,6 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@obs-stream-widgets/core-uitls": "*"
+    "@obs-stream-widgets/core-utils": "*"
   }
 }

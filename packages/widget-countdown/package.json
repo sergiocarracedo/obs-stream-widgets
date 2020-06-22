@@ -7,6 +7,6 @@
   },
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "@obs-stream-widgets/core-uitls": "*"
+    "@obs-stream-widgets/core-utils": "*"
   }
 }
