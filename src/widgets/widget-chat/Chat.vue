@@ -23,9 +23,9 @@ import './Chat.scss'
 import { Youtube, Map, Twitch } from '@/types'
 import YouTubeChat from 'youtube-live-chat'
 import takeRight from 'lodash/takeRight'
-import { ChatMessage } from './types'
-import TwitchClient from 'twitch'
-import TwitchChatClient from 'twitch-chat-client'
+import { ChatMessage, ChartAuthor } from './types'
+// import TwitchClient from 'twitch'
+// import TwitchChatClient from 'twitch-chat-client'
 
 const testMessages = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -66,7 +66,6 @@ const testAuthors = [
   'Silvia Alonso', 'Catalina Rey', 'Cristina', 'H4ckerM4n0', 'Juan Antonio', 'Michael', 'Alfredo Landa', 'Mario Montera', ''
 ]
 
-
 export default Vue.extend({
   name: 'chat',
   props: {
@@ -84,7 +83,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    insertMessage (id:string, author: Map<any>, message: string) {
+    insertMessage (id:string, author: ChartAuthor, message: string) {
       if (this.messages.findIndex((item: ChatMessage) => item.id === id) === -1) {
         this.messages.push({
           content: message,

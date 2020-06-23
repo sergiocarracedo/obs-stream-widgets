@@ -1,15 +1,17 @@
 import store from '@/store'
+import { Map } from '@/types'
 
 export default (): string => {
   let css: string[] =  []
 
-  css.push(`.primary-color { color: ${store.state.theme.primary};}`)
-  css.push(`.primary-stroke { stroke: ${store.state.theme.primary};}`)
-  css.push(`.primary-bg { background-color: ${store.state.theme.primary};}`)
+  const theme = (store.state as unknown as Map<any>).theme
+  css.push(`.primary-color { color: ${theme.primary};}`)
+  css.push(`.primary-stroke { stroke: ${theme.primary};}`)
+  css.push(`.primary-bg { background-color: ${theme.primary};}`)
 
-  css.push(`.primary-light-color { color: ${store.state.theme.primaryLight};}`)
-  css.push(`.primary-light-stroke { stroke: ${store.state.theme.primaryLight};}`)
-  css.push(`.primary-light-bg { background-color: ${store.state.theme.primaryLight};}`)
+  css.push(`.primary-light-color { color: ${theme.primaryLight};}`)
+  css.push(`.primary-light-stroke { stroke: ${theme.primaryLight};}`)
+  css.push(`.primary-light-bg { background-color: ${theme.primaryLight};}`)
 
   return css.join('\n')
 }

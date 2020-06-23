@@ -24,12 +24,6 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'theme-settings',
-  components: {},
-  data () {
-    return {
-      localTheme: {}
-    }
-  },
   computed: {
     primary: {
       get (): string {
@@ -65,10 +59,6 @@ export default Vue.extend({
         this.$socket.client.emit('SET_TWITCH', newValue)
       }
     }
-  },
-  beforeMount () {
-    this.localYoutube = this.youtube
-    this.localTwitch = this.twitch
   }
 })
 </script>

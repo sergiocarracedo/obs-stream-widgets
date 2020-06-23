@@ -4,13 +4,8 @@ import themeStyles from '@/helpers/theme'
 
 export default Vue.extend({
   name: 'theme-style',
-  computed: {
-    themeStyles (): string {
-      return themeStyles()
-    }
-  },
   render: function (createElement) {
-    return createElement('style', this.themeStyles)
+    return createElement('style', themeStyles())
   }
 })
 </script>
