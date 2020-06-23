@@ -27,7 +27,6 @@ $animationDuration: 0.3s;
 
     li {
       margin-bottom: 6px;
-      background: rgba($primary-color, .9);
       color: $text-color;
       padding: 10px;
       padding-left: 46px;
@@ -41,7 +40,6 @@ $animationDuration: 0.3s;
         left: 10px;
         top: 8px;
         overflow: hidden;
-        background: $primary-color-light;
         text-align: center;
         img {
           width: 30px;

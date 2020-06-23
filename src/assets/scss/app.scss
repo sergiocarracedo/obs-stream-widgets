@@ -11,3 +11,9 @@ body {
   background: transparent;
 }
 
+
+.v-color-picker__input {
+  input {
+    color: $white;
+  }
+}

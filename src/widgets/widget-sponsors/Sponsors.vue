@@ -1,5 +1,5 @@
 <template>
-  <div class="sponsors">
+  <div class="sponsors primary-bg">
     <transition name="fade" mode="out-in" v-if="sponsor">
       <sponsor
         :key="sponsor.name"
@@ -46,7 +46,7 @@ export default Vue.extend({
     }
   },
   beforeMount () {
-    this.intervalId = setInterval(this.handler, this.timeout)
+    this.intervalId = +setInterval(this.handler, this.timeout)
   },
   beforeDestroy () {
     clearInterval(this.intervalId as number)

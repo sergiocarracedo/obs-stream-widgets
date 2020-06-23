@@ -13,7 +13,7 @@
         :r="radius"
         :stroke-width="width"
         :stroke="trackColor"
-        class="bg"
+        class="bg primary-light-stroke"
       />
 
       <circle
@@ -25,7 +25,7 @@
         :stroke-dasharray="strokeDashArray"
         :stroke-dashoffset="strokeDashOffset"
         :stroke="color"
-        class="donut" />
+        class="donut primary-stroke" />
     </svg>
     <div class="clock-sphere-content" :style="{ 'color': textColor }">
       <h3>{{ value }}</h3>

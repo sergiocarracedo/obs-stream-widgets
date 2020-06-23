@@ -11,14 +11,20 @@
           :value="remain.hours"
           :max-value="24"
           units="Horas"
+          :color="color"
+          :track-color="trackColor"
         ></clock-sphere>
         <clock-sphere
           :value="remain.minutes"
           units="Minutos"
+          :color="color"
+          :track-color="trackColor"
         ></clock-sphere>
         <clock-sphere
           :value="remain.seconds"
           units="Segundos"
+          :color="color"
+          :track-color="trackColor"
         ></clock-sphere>
       </div>
     </div>
@@ -49,7 +55,19 @@ export default Vue.extend({
       type: [Date, Number, String]
     },
     textBefore: String,
-    textAfter: String
+    textAfter: String,
+    trackColor: {
+      type: String,
+      default: '#aaa'
+    },
+    color: {
+      type: String,
+      default: '#333'
+    },
+    textColor: {
+      type: String,
+      default: '#fff'
+    }
   },
   data () {
     return {
@@ -79,7 +97,7 @@ export default Vue.extend({
     }
   },
   beforeMount () {
-    this.intervalId = setInterval(this.handler, 1000)
+    this.intervalId = +setInterval(this.handler, 1000)
   },
   beforeDestroy () {
     clearInterval(this.intervalId as number)

@@ -5,9 +5,9 @@ import * as countdown from '@/widgets/widget-countdown'
 
 export default {
   widgets: {
-    'widget-brand': brand,
-    'widget-chat': chat,
-    'widget-sponsors': sponsors,
-    'widget-countdown': countdown
+    'brand': brand,
+    'chat': chat,
+    'sponsors': sponsors,
+    'countdown': countdown
   }
 }

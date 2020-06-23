@@ -2,8 +2,8 @@
   <div class="chat">
     <ul>
       <transition-group name="fadeRight">
-        <li v-for="message in messages" :key="message.id">
-          <div class="profile-image">
+        <li v-for="message in messages" :key="message.id" class="primary-bg">
+          <div class="profile-image primary-light-bg">
             <img :src="message.author.profileImageUrl" />
           </div>
           <span class="author">
@@ -96,7 +96,7 @@ export default Vue.extend({
     },
     getChatMessages () {
       if (this.testMode) {
-        this.testInterval = setInterval(() => {
+        this.testInterval = +setInterval(() => {
           const author = {
             name: testAuthors[Math.floor(Math.random() * testAuthors.length)],
             profileImageUrl: 'https://i.pravatar.cc/30'
