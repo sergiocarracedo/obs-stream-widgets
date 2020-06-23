@@ -13,7 +13,7 @@
         :r="radius"
         :stroke-width="width"
         :stroke="trackColor"
-        class="bg"
+        class="bg primary-light-stroke"
       />
 
       <circle
@@ -25,7 +25,7 @@
         :stroke-dasharray="strokeDashArray"
         :stroke-dashoffset="strokeDashOffset"
         :stroke="color"
-        class="donut" />
+        class="donut primary-stroke" />
     </svg>
     <div class="clock-sphere-content" :style="{ 'color': textColor }">
       <h3>{{ value }}</h3>
@@ -35,10 +35,8 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import './Sponsors.scss'
-interface Map<T> {
-  [key:string]: T;
-}
+import { Map } from '@/types'
+import './ClockSphere.scss'
 
 export default Vue.extend({
   name: 'clock-sphere',

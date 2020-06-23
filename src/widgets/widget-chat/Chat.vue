@@ -2,8 +2,16 @@
   <div class="chat">
     <ul>
       <transition-group name="fadeRight">
-        <li v-for="message in messages" :key="message.id">
-          {{ message.content }}
+        <li v-for="message in messages" :key="message.id" class="primary-bg">
+          <div class="profile-image primary-light-bg">
+            <img :src="message.author.profileImageUrl" />
+          </div>
+          <span class="author">
+            {{ message.author.name }}
+          </span>
+          <span class="message">
+            {{ message.content }}
+          </span>
         </li>
       </transition-group>
     </ul>
@@ -15,10 +23,9 @@ import './Chat.scss'
 import { Youtube, Map, Twitch } from '@/types'
 import YouTubeChat from 'youtube-live-chat'
 import takeRight from 'lodash/takeRight'
-import { ChatMessage } from './types'
-import TwitchClient from 'twitch'
-import TwitchChatClient from 'twitch-chat-client'
-
+import { ChatMessage, ChartAuthor } from './types'
+// import TwitchClient from 'twitch'
+// import TwitchChatClient from 'twitch-chat-client'
 
 const testMessages = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -55,6 +62,10 @@ const testMessages = [
   'In ut arcu eget ex condimentum blandit.'
 ]
 
+const testAuthors = [
+  'Silvia Alonso', 'Catalina Rey', 'Cristina', 'H4ckerM4n0', 'Juan Antonio', 'Michael', 'Alfredo Landa', 'Mario Montera', ''
+]
+
 export default Vue.extend({
   name: 'chat',
   props: {
@@ -72,58 +83,79 @@ export default Vue.extend({
     }
   },
   methods: {
-    insertMessage (message: Map<any>) {
-      const id = message.liveChatId as string
+    insertMessage (id:string, author: ChartAuthor, message: string) {
       if (this.messages.findIndex((item: ChatMessage) => item.id === id) === -1) {
         this.messages.push({
-          content: message.displayMessage,
+          content: message,
+          author: author,
           id
         })
       }
       this.messages = takeRight(this.messages, 40)
+    },
+    getChatMessages () {
+      if (this.testMode) {
+        this.testInterval = +setInterval(() => {
+          const author = {
+            name: testAuthors[Math.floor(Math.random() * testAuthors.length)],
+            profileImageUrl: 'https://i.pravatar.cc/30'
+          }
+          this.insertMessage(
+            (Math.random() * 100000).toFixed(0),
+            author,
+            testMessages[Math.floor(Math.random() * testMessages.length)]
+          )
+        }, 2300)
+      } else {
+        // this.twitchClient = TwitchClient.withClientCredentials(this.twitchSettings.clientId, this.twitchSettings.clientSecret)
+        //
+        // const options = {
+        //   channels: ['iamcristinini']
+        // }
+        // this.twitchChatClient = new TwitchChatClient(this.twitchClient, options)
+
+        this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
+        this.youtubeChatClient.on('ready', () => {
+          this.youtubeChatClient.listen(5000)
+        })
+
+        this.youtubeChatClient.on('message', (data: any) => {
+          const author = {
+            name: data.authorDetails.displayName,
+            profileImageUrl: data.authorDetails.profileImageUrl
+          }
+          this.insertMessage(data.id, author, data.snippet.displayMessage)
+        })
+
+        this.youtubeChatClient.on('error', (error: any) => {
+          if (error.error.code === 403) {
+            this.youtubeChatClient.stop()
+            console.error('API LIMIT EXCEEDED')
+          } else {
+            console.error(error)
+          }
+        })
+      }
     }
   },
   beforeMount () {
-    if (this.testMode) {
-      this.testInterval = <any>setInterval(() => {
-        this.insertMessage({
-          liveChatId: (Math.random() * 100000).toFixed(0),
-          displayMessage: testMessages[Math.floor(Math.random() * testMessages.length)]
-        })
-      }, 1000)
-    } else {
-      // this.twitchClient = TwitchClient.withClientCredentials(this.twitchSettings.clientId, this.twitchSettings.clientSecret)
-      //
-      // const options = {
-      //   channels: ['iamcristinini']
-      // }
-      // this.twitchChatClient = new TwitchChatClient(this.twitchClient, options)
-
-      this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
-
-      this.youtubeChatClient.on('ready', () => {
-        this.youtubeChatClient.listen(5000)
-      })
-
-      this.youtubeChatClient.on('message', (data: any) => {
-        this.insertMessage(data.snippet)
-      })
-
-      this.youtubeChatClient.on('error', (error: any) => {
-        if (error.error.code === 403) {
-          this.youtubeChatClient.stop()
-          console.error('API LIMIT EXCEEDED')
-        } else {
-          console.error(error)
-        }
-      })
-    }
+    this.getChatMessages()
   },
   beforeDestroy () {
     if (this.testMode) {
       clearInterval(this.testInterval!)
     } else {
       this.youtubeChatClient.stop()
+    }
+  },
+  watch: {
+    testMode (newValue) {
+      if (newValue) {
+        this.youtubeChatClient.stop()
+      } else {
+        clearInterval(this.testInterval!)
+      }
+      this.getChatMessages()
     }
   }
 })

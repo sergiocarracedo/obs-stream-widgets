@@ -1,4 +1,4 @@
-@import '../_variables.scss';
+@import '../variables';
 .chat-settings {
   .demo-wrapper {
     background: #fff url(~@/assets/i/bg.png);
@@ -10,6 +10,7 @@
 
     .chat {
       color: $black !important;
+      height: 400px;
     }
   }
 }

@@ -1,4 +1,4 @@
-@import '../_variables.scss';
+@import '../variables';
 
 .countdown {
   font-family: $primary-font;
@@ -24,12 +24,12 @@
     }
 
     .clock-sphere {
-      .bg {
-        stroke: $primary-color-light;
-      }
-      .donut {
-        stroke: $primary-color;
-      }
+      //.bg {
+      //  stroke: $primary-color-light;
+      //}
+      //.donut {
+      //  stroke: $primary-color;
+      //}
       .clock-sphere-content {
         span {
           -webkit-text-stroke: 0;

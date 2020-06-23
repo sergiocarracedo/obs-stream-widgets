@@ -9,7 +9,7 @@ const state: Map<any> = {
 }
 
 const mutations: MutationTree<Map<any>> = {
-  SOCKET_SET_TARGET_DATE: (state, target: Date | number) => {
+  SOCKET_SET_TARGET_DATE: (state, target: number) => {
     state.targetDate = +dayjs(target)
   },
   SOCKET_SET_TEXT_BEFORE: (state, payload: string) => {

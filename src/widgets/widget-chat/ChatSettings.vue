@@ -10,7 +10,7 @@
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
           <v-col cols="12" lg="6">
-
+            <v-switch v-model="testMode" label="Demo mode"></v-switch>
           </v-col>
         </v-row>
       </v-card-text>
@@ -20,7 +20,7 @@
       <chat-widget
         :youtube-settings="youtubeSettings"
         :twitch-settings="twitchSettings"
-        :test-mode="true"
+        :test-mode="testMode"
       ></chat-widget>
     </div>
   </div>
@@ -37,6 +37,11 @@ export default Vue.extend({
   components: {
     WidgetUrl,
     ChatWidget
+  },
+  data () {
+    return {
+      testMode: true
+    }
   },
   computed: {
     widgetUrl (): string {

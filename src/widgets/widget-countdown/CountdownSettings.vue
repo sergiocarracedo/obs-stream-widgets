@@ -85,6 +85,8 @@
       :target="dateTime"
       :text-before="textBefore"
       :text-after="textAfter"
+      :color="primaryColor"
+      :track-color="primaryLightColor"
     ></countdown-widget>
   </div>
 </template>
@@ -94,6 +96,9 @@ import WidgetUrl from '@/components/WidgetUrl.vue'
 import CountdownWidget from './Countdown.vue'
 import dayjs from 'dayjs'
 import './CountdownSettings.scss'
+import {createNamespacedHelpers} from "vuex";
+const themeHelpers = createNamespacedHelpers('theme')
+const mapStateTheme = themeHelpers.mapState
 
 export default Vue.extend({
   name: 'countdown-settings',
@@ -160,7 +165,11 @@ export default Vue.extend({
     },
     widgetUrl () {
       return `${this.$store.state.basePath}/widget/countdown/`
-    }
+    },
+    ...mapStateTheme({
+      primaryColor: 'primary',
+      primaryLightColor: 'primaryLight'
+    })
   },
   methods: {
     parseDate (date: string): string {
@@ -169,7 +178,6 @@ export default Vue.extend({
   },
   watch: {
     date (val: string):void {
-      console.log(val, dayjs(val).format('DD/MM/YYYY'))
       this.dateFormatted = dayjs(val).format('DD/MM/YYYY')
     }
   },

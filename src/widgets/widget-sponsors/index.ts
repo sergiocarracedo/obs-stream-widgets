@@ -2,5 +2,6 @@ import settingsComponent from './SponsorsSettings.vue'
 import widgetViewComponent from './SponsorsView.vue'
 import store from './store'
 import metadata from './widget.json'
+const namespace = 'sponsors'
 
-export { settingsComponent, store, metadata, widgetViewComponent }
+export { namespace, settingsComponent, store, metadata, widgetViewComponent }

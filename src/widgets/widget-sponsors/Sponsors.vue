@@ -1,5 +1,5 @@
 <template>
-  <div class="sponsors">
+  <div class="sponsors primary-bg">
     <transition name="fade" mode="out-in" v-if="sponsor">
       <sponsor
         :key="sponsor.name"

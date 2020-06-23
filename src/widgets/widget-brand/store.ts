@@ -2,11 +2,11 @@ import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { Map } from '@/types'
 
 const state: Map<any> = {
-  logo: String
+  logo: ''
 }
 
 const mutations: MutationTree<Map<any>> = {
-  SOCKET_SET_LOGO: (state, logo: String) => {
+  SOCKET_SET_LOGO: (state, logo: string) => {
     state.logo = logo
   }
 }

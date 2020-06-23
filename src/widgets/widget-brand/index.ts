@@ -3,5 +3,6 @@ import settingsComponent from './BrandSettings.vue'
 import widgetViewComponent from './BrandView.vue'
 import store from './store'
 import metadata from './widget.json'
+const namespace = 'brand'
 
-export { widgetComponent, settingsComponent, store, metadata, widgetViewComponent }
+export { namespace, widgetComponent, settingsComponent, store, metadata, widgetViewComponent }

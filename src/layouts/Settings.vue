@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <theme-styles></theme-styles>
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -29,7 +30,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <v-container
         fluid
         class="content"
@@ -42,19 +43,23 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
     <v-footer app>
-      <span>Made with <span class="primary">❤</span>️ by <a href="https://sergiocarracedo.es">Sergio Carracedo</a></span>
+      <span>Made with <span>❤</span>️ by <a href="https://sergiocarracedo.es">Sergio Carracedo</a></span>
     </v-footer>
   </v-app>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import widgets from '@/widgets'
+import widgets from '../widgets'
 import { Map } from '@/types'
+import ThemeStyles from '@/components/ThemeStyles.vue'
 
 export default Vue.extend({
   name: 'settings-layout',
+  components: {
+    ThemeStyles
+  },
   data () {
     return {
       drawer: true,
@@ -67,6 +72,12 @@ export default Vue.extend({
       name: 'Global',
       icon: 'mdi-wrench',
       to: 'GlobalSettings'
+    })
+
+    this.menu.push({
+      name: 'Theme',
+      icon: 'mdi-palette',
+      to: 'ThemeSettings'
     })
 
     Object.entries(widgets).forEach(([key, value]: any[]) => {

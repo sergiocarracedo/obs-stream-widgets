@@ -2,7 +2,7 @@
   <div>
     <chat-widget
       :youtube-settings="youtubeSettings"
-      :test-mode="true"
+      :test-mode="false"
     ></chat-widget>
   </div>
 </template>

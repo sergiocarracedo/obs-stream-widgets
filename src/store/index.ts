@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex, { MutationTree, ActionTree, ModuleTree } from 'vuex'
-import widgets from '@/widgets'
+import widgets from '../widgets'
 import VuexPersistedState from 'vuex-persistedstate'
+import modules from './modules'
 import { Twitch, Youtube } from '@/types'
 
 Vue.use(Vuex)
@@ -25,10 +26,9 @@ const mutations: MutationTree<any> = {
 const actions: ActionTree<string, any> = {
 }
 
-const modules = {} as ModuleTree<string>
 Object.entries(widgets).forEach(([key, value]: any[]) => {
   if (value.store) {
-    modules[key] = value.store
+    modules[value.namespace || key] = value.store
   }
 })
 

@@ -10,12 +10,11 @@
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
           <v-col cols="12" lg="6">
-            <v-file-input
-              accept="image/*"
-              label="Logo"
-              filled
-              @change="onFileChange"
-            ></v-file-input>
+            <upload-btn
+              @upload="onUpload"
+              :max-width="270"
+              :max-height="270"
+            ></upload-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -31,13 +30,15 @@
 import Vue from 'vue'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import BrandWidget from './Brand.vue'
+import UploadBtn from '@/components/UploadBtn.vue'
 import './BrandSettings.scss'
 
 export default Vue.extend({
   name: 'brand-settings',
   components: {
     WidgetUrl,
-    BrandWidget
+    BrandWidget,
+    UploadBtn
   },
   computed: {
     logo (): string {
@@ -48,17 +49,9 @@ export default Vue.extend({
     }
   },
   methods: {
-    async onFileChange (e: File) {
-      const toBase64 = (file: File) => new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => resolve(reader.result)
-        reader.onerror = error => reject(error)
-      })
-
-      const logo = (await toBase64(e)) as string
-      this.$store.commit('brand/SOCKET_SET_LOGO', logo)
-      this.$socket.client.emit('SET_LOGO', logo)
+    onUpload (image: File) {
+      this.$store.commit('brand/SOCKET_SET_LOGO', image)
+      this.$socket.client.emit('SET_LOGO', image)
     }
   }
 })

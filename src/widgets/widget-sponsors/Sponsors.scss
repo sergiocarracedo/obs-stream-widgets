@@ -1,10 +1,9 @@
-@import '../_variables.scss';
+@import '../variables';
 
 .sponsors {
   overflow: hidden;
   font-family: $primary-font;
   text-align: center;
-  background: $primary-color;
   height: 100px;
   width: 300px;
   display: flex;

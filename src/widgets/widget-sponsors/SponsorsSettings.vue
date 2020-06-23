@@ -17,12 +17,11 @@
             <v-text-field v-model="sponsor.name" label="Name" filled></v-text-field>
           </v-col>
           <v-col cols="12" lg="3">
-            <v-file-input
-              accept="image/*"
-              label="Logo"
-              filled
-              @change="onFileChange($event, index)"
-            ></v-file-input>
+            <upload-btn
+              @upload="onUpload($event, index)"
+              :max-width="270"
+              :max-height="70"
+            ></upload-btn>
           </v-col>
           <v-col cols="12" lg="4" class="align-self-center">
             <div class="d-flex align-center align-self-center">
@@ -50,12 +49,14 @@ import WidgetUrl from '@/components/WidgetUrl.vue'
 import SponsorsWidget from './Sponsors.vue'
 import './SponsorsSettings.scss'
 import { Sponsor as SponsorType } from './types'
+import UploadBtn from '@/components/UploadBtn.vue'
 
 export default Vue.extend({
   name: 'sponsors-settings',
   components: {
     WidgetUrl,
-    SponsorsWidget
+    SponsorsWidget,
+    UploadBtn
   },
   data () {
     return {
@@ -80,15 +81,8 @@ export default Vue.extend({
     removeSponsor (index: number) {
       this.sponsors = this.sponsors.splice(index, 1)
     },
-    async onFileChange (e: File, index: number) {
-      const toBase64 = (file: File) => new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => resolve(reader.result)
-        reader.onerror = error => reject(error)
-      })
-
-      this.sponsors[index].logo = (await toBase64(e)) as string
+    onUpload (image: String, index: number) {
+      this.sponsors[index].logo = image
     }
   },
   watch: {

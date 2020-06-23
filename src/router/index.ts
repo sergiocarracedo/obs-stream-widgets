@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import widgets from '@/widgets'
+import widgets from '../widgets'
 import GlobalSettings from '../views/Settings/Global.vue'
+import ThemeSettings from '../views/Settings/Theme.vue'
 import ImportExportSettings from '../views/Settings/ImportExport.vue'
 
 Vue.use(VueRouter)
@@ -11,6 +12,14 @@ const routes: Array<RouteConfig> = [
     path: '/settings/global',
     name: 'GlobalSettings',
     component: GlobalSettings,
+    meta: {
+      layout: 'settings'
+    }
+  },
+  {
+    path: '/settings/theme',
+    name: 'ThemeSettings',
+    component: ThemeSettings,
     meta: {
       layout: 'settings'
     }
@@ -42,6 +51,7 @@ Object.entries(widgets).forEach(([key, value]: any[]) => {
     component: value.widgetViewComponent
   })
 })
+
 
 const router = new VueRouter({
   mode: 'history',
