@@ -16,13 +16,15 @@
       :timeout="2000"
     >
       Url copied to clipboard
-      <v-btn
-        color="primary"
-        text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
+      <template v-slot:action>
+        <v-btn
+          color="primary"
+          text
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
     </v-snackbar>
   </div>
 </template>

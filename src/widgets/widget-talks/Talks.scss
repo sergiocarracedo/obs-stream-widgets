@@ -1,0 +1,36 @@
+@import '../variables';
+
+.talk {
+  font-family: $primary-font;
+  text-align: center;
+  width: 100%;
+  color: $white;
+
+  h1 {
+    text-align: center;
+    font-size: 40px;
+    text-shadow: $black 0 0 4px;
+  }
+
+  .speaker {
+    margin-bottom: 15px;
+    h3 {
+      text-align: center;
+      font-size: 25px;
+      text-shadow: $black 0 0 4px;
+    }
+    .picture-wrapper {
+      margin: 0 auto 7px auto;
+      border-radius: 9999px;
+      border-width: 5px;
+      border-style: solid;
+      width: 80px;
+      height: 80px;
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center center;
+    }
+  }
+
+}
