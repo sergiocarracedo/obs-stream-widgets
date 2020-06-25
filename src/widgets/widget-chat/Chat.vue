@@ -24,8 +24,8 @@ import { Youtube, Map, Twitch } from '@/types'
 import YouTubeChat from 'youtube-live-chat'
 import takeRight from 'lodash/takeRight'
 import { ChatMessage, ChartAuthor } from './types'
-// import TwitchClient from 'twitch'
-// import TwitchChatClient from 'twitch-chat-client'
+import tmi from 'tmi.js'
+import { Platform } from '@/enums'
 
 const testMessages = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -69,9 +69,10 @@ const testAuthors = [
 export default Vue.extend({
   name: 'chat',
   props: {
-    youtubeSettings: {} as () => Youtube,
-    twitchSettings: {} as () => Twitch,
-    testMode: Boolean
+    youtubeSettings: Object as () => Youtube,
+    twitchSettings: Object as () => Twitch,
+    testMode: Boolean,
+    platform: String as () => Platform
   },
   data () {
     return {
@@ -107,34 +108,82 @@ export default Vue.extend({
           )
         }, 2300)
       } else {
-        // this.twitchClient = TwitchClient.withClientCredentials(this.twitchSettings.clientId, this.twitchSettings.clientSecret)
-        //
-        // const options = {
-        //   channels: ['iamcristinini']
+        switch (this.platform) {
+          case Platform.YouTube:
+            this.getYouTubeChatMessages()
+            break
+          case Platform.Twitch:
+            this.getTwitchChatMessages()
+            break
+        }
+      }
+    },
+    getYouTubeChatMessages () {
+      this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
+      this.youtubeChatClient.on('ready', () => {
+        this.youtubeChatClient.listen(5000)
+      })
+
+      this.youtubeChatClient.on('message', (data: any) => {
+        const author = {
+          name: data.authorDetails.displayName,
+          profileImageUrl: data.authorDetails.profileImageUrl
+        }
+        this.insertMessage(data.id, author, data.snippet.displayMessage)
+      })
+
+      this.youtubeChatClient.on('error', (error: any) => {
+        if (error.error.code === 403) {
+          this.youtubeChatClient.stop()
+          console.error('API LIMIT EXCEEDED')
+        } else {
+          console.error(error)
+        }
+      })
+    },
+    getTwitchChatMessages () {
+      const client = new (tmi as any).Client({
+        options: {
+          debug: false
+        },
+        connection: {
+          reconnect: true,
+          secure: true
+        },
+        // identity: {
+        //   username: 'bot-name',
+        //   password: 'oauth:my-bot-token'
+        // },
+        channels: [
+          this.twitchSettings.channel
+        ]
+      }) as any
+      client.connect()
+      client.on('message', (channel: string, tags: Map<any>, message: any, self: any) => {
+        if (self) {
+          return
+        }
+
+        this.insertMessage(
+          tags.id,
+          {
+            name: tags.displayName,
+            profileImageUrl: ''
+          },
+          message
+        )
+        // if (message.toLowerCase() === '!hello') {
+        //   client.say(channel, `@${tags.username}, heya!`);
         // }
-        // this.twitchChatClient = new TwitchChatClient(this.twitchClient, options)
-
-        this.youtubeChatClient = new YouTubeChat(this.youtubeSettings.channelId, this.youtubeSettings.apiKey)
-        this.youtubeChatClient.on('ready', () => {
-          this.youtubeChatClient.listen(5000)
-        })
-
-        this.youtubeChatClient.on('message', (data: any) => {
-          const author = {
-            name: data.authorDetails.displayName,
-            profileImageUrl: data.authorDetails.profileImageUrl
-          }
-          this.insertMessage(data.id, author, data.snippet.displayMessage)
-        })
-
-        this.youtubeChatClient.on('error', (error: any) => {
-          if (error.error.code === 403) {
-            this.youtubeChatClient.stop()
-            console.error('API LIMIT EXCEEDED')
-          } else {
-            console.error(error)
-          }
-        })
+      })
+    },
+    exitChat (value: boolean) {
+      if (value) {
+        clearInterval(this.testInterval!)
+      } else {
+        if (this.platform === Platform.YouTube) {
+          this.youtubeChatClient.stop()
+        }
       }
     }
   },
@@ -142,19 +191,11 @@ export default Vue.extend({
     this.getChatMessages()
   },
   beforeDestroy () {
-    if (this.testMode) {
-      clearInterval(this.testInterval!)
-    } else {
-      this.youtubeChatClient.stop()
-    }
+    this.exitChat(this.testMode)
   },
   watch: {
     testMode (newValue) {
-      if (newValue) {
-        this.youtubeChatClient.stop()
-      } else {
-        clearInterval(this.testInterval!)
-      }
+      this.exitChat(!this.testMode)
       this.getChatMessages()
     }
   }

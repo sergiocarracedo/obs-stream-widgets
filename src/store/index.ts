@@ -4,13 +4,15 @@ import widgets from '../widgets'
 import VuexPersistedState from 'vuex-persistedstate'
 import modules from './modules'
 import { Twitch, Youtube } from '@/types'
+import { Platform } from '@/enums'
 
 Vue.use(Vuex)
 
 const state = {
   basePath: `${window.location.protocol}//${window.location.host}`,
   youtube: {} as Youtube,
-  twitch: {} as Twitch
+  twitch: {} as Twitch,
+  platform: Platform.YouTube
 } as any
 
 const mutations: MutationTree<any> = {
@@ -19,6 +21,9 @@ const mutations: MutationTree<any> = {
   },
   SOCKET_SET_TWITCH: (state, twitch: Twitch) => {
     state.twitch = twitch
+  },
+  SOCKET_SET_PLATFORM: (state, platform: Platform) => {
+    state.platform = platform
   }
 
 }

@@ -1,16 +1,14 @@
 <template>
   <div>
     <chat-widget
-      :youtube-settings="youtube"
-      :twitch-settings="twitch"
-      :platform="platform"
+      :youtube-settings="youtubeSettings"
       :test-mode="false"
     ></chat-widget>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import ChatWidget from './Chat.vue'
+import ChatWidget from './Followers.vue'
 import { mapState } from 'vuex'
 
 export default Vue.extend({
@@ -20,9 +18,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState([
-      'youtube',
-      'twitch',
-      'platform'
+      'youtubeSettings'
     ])
   }
 })

@@ -1,4 +1,5 @@
 export interface Twitch {
   clientId: string
-  clientSecret: string
+  clientSecret: string,
+  channel: string
 }
