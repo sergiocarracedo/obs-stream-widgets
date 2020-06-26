@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-btn @click="onClick">
+    <v-btn color="primary" @click="onClick">
       <v-icon v-if="icon" left>{{ icon }}</v-icon>
       {{ text }}
     </v-btn>

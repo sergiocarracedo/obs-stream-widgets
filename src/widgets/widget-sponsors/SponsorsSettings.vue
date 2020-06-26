@@ -16,14 +16,14 @@
           <v-col cols="12" lg="5">
             <v-text-field v-model="sponsor.name" label="Name" filled></v-text-field>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" lg="3" class="pt-5">
             <upload-btn
               @upload="onUpload($event, index)"
               :max-width="270"
               :max-height="70"
             ></upload-btn>
           </v-col>
-          <v-col cols="12" lg="4" class="align-self-center">
+          <v-col cols="12" lg="4">
             <div class="d-flex align-center align-self-center">
               <v-img :src="sponsor.logo" contain max-width="60" max-height="60"></v-img>
               <v-spacer></v-spacer>

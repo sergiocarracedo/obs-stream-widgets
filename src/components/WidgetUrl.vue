@@ -7,7 +7,7 @@
       :value="url"
       filled
     ></v-text-field>
-    <v-btn @click="onClick" fab color="gray lighten-4" class="ml-2" title="Copy to cilpboard">
+    <v-btn @click="onClick" fab color="primary" class="ml-2" title="Copy to cilpboard">
       <v-icon>mdi-clipboard</v-icon>
     </v-btn>
 

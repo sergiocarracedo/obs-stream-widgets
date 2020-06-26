@@ -32,6 +32,7 @@
     "vue-use-web": "^0.10.1",
     "vue2-animate": "^2.1.3",
     "vuetify": "^2.2.22",
+    "vuetify-confirm": "^2.0.5",
     "vuex": "^3.1.3",
     "vuex-persist": "^2.2.0",
     "vuex-persistedstate": "^3.0.1",

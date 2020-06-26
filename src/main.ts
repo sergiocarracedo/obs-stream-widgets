@@ -9,12 +9,14 @@ import io from 'socket.io-client'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import './assets/scss/app.scss'
+import VuetifyConfirm from 'vuetify-confirm'
 
 Vue.use(VueCompositionApi)
 
 const socket = io(process.env.VUE_APP_SOCKET as string)
 Vue.use(VueSocketIO, socket, { store })
 Vue.config.productionTip = false
+Vue.use(VuetifyConfirm, { vuetify })
 
 new Vue({
   vuetify,

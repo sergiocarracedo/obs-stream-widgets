@@ -18,7 +18,7 @@
     <v-radio-group v-model="selectedTalk">
       <v-card v-for="(talk, index) in localTalks" :key="index">
         <v-card-title>
-          <v-radio :value="index" :label="talk.name"></v-radio>
+          <v-radio :value="index" :label="talk.title"></v-radio>
           <v-spacer></v-spacer>
           <div class="d-flex align-center align-self-center">
             <v-spacer></v-spacer>
@@ -30,7 +30,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12" lg="3">
-              <v-text-field v-model="talk.name" label="Title" filled></v-text-field>
+              <v-text-field v-model="talk.title" label="Title" filled></v-text-field>
             </v-col>
             <v-col cols="12" lg="3">
               <v-text-field v-model="talk.speaker.name" label="Ponente" filled></v-text-field>
@@ -95,7 +95,6 @@ export default Vue.extend({
       }
     },
     talk (): TalkType {
-      console.log(this.selectedTalk, this.talks[this.selectedTalk] || {})
       return this.talks[this.selectedTalk] || {}
     },
     widgetUrl () {
@@ -105,7 +104,7 @@ export default Vue.extend({
   methods: {
     addTalk () {
       this.localTalks.push({
-        name: '',
+        title: '',
         speaker: {
           name: '',
           picture: ''
@@ -115,7 +114,7 @@ export default Vue.extend({
     removeTalk (index: number) {
       this.talks = this.talks.splice(index, 1)
     },
-    onUpload (image: String, index: number) {
+    onUpload (image: string, index: number) {
       this.talks[index].speaker.picture = image
     }
   },

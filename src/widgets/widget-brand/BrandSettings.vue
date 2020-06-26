@@ -9,7 +9,7 @@
           <v-col cols="12" lg="6">
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="6" class="pt-5">
             <upload-btn
               @upload="onUpload"
               :max-width="270"

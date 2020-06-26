@@ -5,7 +5,7 @@
       </div>
       <h3 class="primary-light-color">{{ talk.speaker.name }}</h3>
     </div>
-    <h1>{{ talk.name }}</h1>
+    <h1>{{ talk.title }}</h1>
   </div>
 </template>
 <script lang="ts">
