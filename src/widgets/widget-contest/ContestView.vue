@@ -1,27 +1,23 @@
 <template>
   <div>
-    <contest-ranking-widget
-      v-if="!status.questionActive"
-      :ranking="ranking"
-    ></contest-ranking-widget>
     <contest-widget
-      v-else
-      :question="question"
+      :status="status.questionActive"
+      :question="currentQuestion"
+      :raking="ranking"
     ></contest-widget>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import ContestWidget from './Contest.vue'
-import ContestRankingWidget from './ContestRanking.vue'
 import { createNamespacedHelpers } from 'vuex'
+import {Question as QuestionType, Question} from '@/widgets/widget-contest/types'
 const { mapState } = createNamespacedHelpers('contest')
 
 export default Vue.extend({
   name: 'talk-view',
   components: {
-    ContestWidget,
-    ContestRankingWidget
+    ContestWidget
   },
   computed: {
     ...mapState([
@@ -30,6 +26,9 @@ export default Vue.extend({
     ]),
     ranking (): any[] {
       return []
+    },
+    currentQuestion (): QuestionType {
+      return this.$store.getters['contest/currentQuestion']
     }
   }
 })

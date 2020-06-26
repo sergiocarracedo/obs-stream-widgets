@@ -52,7 +52,9 @@
     <v-alert type="info" border="left" color="yellow" text>Size 300x100px</v-alert>
     <div class="demo-wrapper">
       <contest-widget
-        :questions="questions"
+        :status="status.questionActive"
+        :question="currentQuestion"
+        :ranking="ranking"
       ></contest-widget>
     </div>
   </div>
@@ -63,7 +65,7 @@ import WidgetUrl from '@/components/WidgetUrl.vue'
 import ContestWidget from './Contest.vue'
 import ContestExecute from './ContestExecute.vue'
 import './ContestSettings.scss'
-import { Answer, Question as QuestionType } from './types'
+import {Answer, ContestStatus, Question as QuestionType, RankingUser} from './types'
 import { mapState } from 'vuex'
 import { Platform } from '@/enums'
 
@@ -83,20 +85,46 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(['platform']),
+    status (): ContestStatus {
+      return this.$store.state.contest.status
+    },
     questions (): QuestionType[] {
       return this.$store.state.contest.questions
     },
-    activeQuestion: {
-      get (): number {
-        return this.$store.state.contest.activeQuestion
-      },
-      set (index: number) {
-        this.$store.commit('contest/SOCKET_SET_ACTIVE_QUESTION', index)
-        this.$socket.client.emit('SET_ACTIVE_QUESTION', index)
-      }
+    currentQuestion (): QuestionType {
+      return this.$store.getters['contest/currentQuestion']
     },
-    widgetUrl () {
+    widgetUrl (): string {
       return `${this.$store.state.basePath}/widget/contest/`
+    },
+    ranking (): RankingUser[] {
+      return [
+        {
+          id: 1,
+          name: 'Sergio Carracedo',
+          points: 1234
+        },
+        {
+          id: 2,
+          name: 'Félix Gómez',
+          points: 1123
+        },
+        {
+          id: 3,
+          name: 'Rolando Caldas',
+          points: 1045
+        },
+        {
+          id: 4,
+          name: 'Fran Iglesias',
+          points: 909
+        },
+        {
+          id: 5,
+          name: 'Catalina Rey',
+          points: 900
+        }
+      ]
     }
   },
   methods: {

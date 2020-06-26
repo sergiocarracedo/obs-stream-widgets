@@ -11,5 +11,43 @@
     font-size: 40px;
     text-shadow: $black 0 0 4px;
   }
+}
+
+.contest-ranking {
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
+  overflow: hidden;
+
+  h1 {
+    text-align: center;
+    font-size: 40px;
+    text-shadow: $black 0 0 4px;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  .ranking-item {
+    list-style: none;
+    padding: 7px 15px;
+    margin-bottom: 7px;
+    color: $black;
+    display: flex;
+
+    &.highlighted {
+      color: $white
+    }
+
+    strong {
+      margin-right: 15px;
+    }
+
+    .spacer {
+      flex: 1;
+    }
+  }
 
 }

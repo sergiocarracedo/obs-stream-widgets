@@ -14,8 +14,8 @@ export interface QuestionAnswer {
 
 export interface RankingUser {
   id: string
+  name: string
   points: number
-  questionsAnswer: QuestionAnswer[]
 }
 
 

@@ -4,8 +4,11 @@
     <ul>
       <li
         v-for="(item, index) in ranking"
-        :class="{'ranking-item': true, 'primary-bg': index < 3, 'primary-light-bg': index >= 3 }">
-        <strong>{{ index + 1 }}</strong> {{ item.username }} {{ item.points }}
+        :class="classes(index)">
+        <strong>{{ index + 1 }}</strong>
+        {{ item.name }}
+        <div class="spacer"></div>
+        {{ item.points }}
       </li>
     </ul>
   </div>
@@ -14,6 +17,7 @@
 import Vue from 'vue'
 import './Contest.scss'
 import { RankingUser } from './types'
+import { Map } from '@/types'
 
 export default Vue.extend({
   name: 'contest',
@@ -25,6 +29,16 @@ export default Vue.extend({
   },
   data () {
     return {}
+  },
+  methods: {
+    classes (index: number): Map<boolean> {
+      return {
+        'ranking-item': true,
+        'primary-bg': index < 3,
+        'highlighted': index < 3,
+        'primary-light-bg': index >= 3
+      }
+    }
   }
 })
 </script>

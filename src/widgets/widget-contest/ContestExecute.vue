@@ -11,11 +11,11 @@
       </v-btn>
       <template v-else>
         <template v-if="!this.isLastQuestion">
-          <v-btn @click="finishQuestion">
-            Stop question
+          <v-btn color="primary" @click="finishQuestion">
+            Finish question
           </v-btn>
           <v-chip class="ml-5">
-            Answers: {{ currentQuestionAnswers.length }}
+            Answers: {{ currentQuestionAnswers.lenght }}
           </v-chip>
         </template>
       </template>
@@ -30,7 +30,7 @@
 import Vue from 'vue'
 import tmi from 'tmi.js'
 import { Map } from '@/types'
-import { Question, Answer } from './types'
+import {Question, Answer, Question as QuestionType} from './types'
 import { mapState, createNamespacedHelpers } from 'vuex'
 const contestStateHelper = createNamespacedHelpers('contest')
 
@@ -47,8 +47,8 @@ export default Vue.extend({
     currentQuestionIndex (): number | string {
       return this.status.questionIndex + 1
     },
-    currentQuestion (): Question {
-      return this.questions[this.status.questionIndex]
+    currentQuestion (): QuestionType {
+      return this.$store.getters['contest/currentQuestion']
     },
     isLastQuestion (): boolean {
       return this.status.questionIndex >= (this.questions.length - 1)
@@ -80,7 +80,6 @@ export default Vue.extend({
       client.say(this.twitch.channel, this.currentQuestion.title)
 
       this.currentQuestion.answers.forEach((answer: Answer, index:number) => {
-        console.log(`${String.fromCharCode(66 + index)}: ${answer.text}`)
         client.say(this.twitch.channel, `${String.fromCharCode(65 + index)}: ${answer.text}`)
       })
 

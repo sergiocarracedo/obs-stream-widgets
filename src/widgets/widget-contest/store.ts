@@ -32,7 +32,11 @@ const mutations: MutationTree<Map<any>> = {
 
 const actions: ActionTree<Map<any>, any> = {}
 
-const getters: GetterTree<Map<any>, any> = {}
+const getters: GetterTree<Map<any>, any> = {
+  currentQuestion (state): Question {
+    return state.questions[state.status.questionIndex]
+  }
+}
 
 export default {
   namespaced: true,

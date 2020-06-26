@@ -1,23 +1,36 @@
 <template>
-  <div class="contest" v-if="questions">
-    <h1>{{ questions.name }}</h1>
+  <div>
+    <contest-ranking-widget
+      v-if="!active"
+      :ranking="ranking"
+    ></contest-ranking-widget>
+    <contest-question-widget
+      v-else
+      :question="question"
+    ></contest-question-widget>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import './Contest.scss'
-import { Question } from './types'
+import ContestQuestionWidget from './ContestQuestion.vue'
+import ContestRankingWidget from './ContestRanking.vue'
+import { Question, RankingUser } from './types'
 
 export default Vue.extend({
   name: 'contest',
-  components: {},
-  props: {
-    questions: {
-      type: Array as () => Question[]
-    }
+  components: {
+    ContestRankingWidget,
+    ContestQuestionWidget
   },
-  data () {
-    return {}
+  props: {
+    question: {
+      type: Object as () => Question
+    },
+    ranking: {
+      type: Array as () => RankingUser[]
+    },
+    active: Boolean
   }
 })
 </script>
