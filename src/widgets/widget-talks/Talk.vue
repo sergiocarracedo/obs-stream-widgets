@@ -1,11 +1,13 @@
 <template>
-  <div class="talk" v-if="talk">
-    <div class="speaker">
-      <div class="picture-wrapper primary-light-bg primary-border" v-if="talk.speaker.picture" :style="{ backgroundImage: `url(${talk.speaker.picture})` }">
+  <div class="talk-wrapper" v-if="talk">
+    <div class="talk">
+      <div class="speaker">
+        <div class="picture-wrapper primary-light-bg primary-border" v-if="talk.speaker.picture" :style="{ backgroundImage: `url(${talk.speaker.picture})` }">
+        </div>
+        <h3 class="primary-light-color">{{ talk.speaker.name }}</h3>
       </div>
-      <h3 class="primary-light-color">{{ talk.speaker.name }}</h3>
+      <h1>{{ talk.title }}</h1>
     </div>
-    <h1>{{ talk.title }}</h1>
   </div>
 </template>
 <script lang="ts">

@@ -1,15 +1,53 @@
 @import '../variables';
 
-.contest {
+.contest-wrapper {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contest-question {
   font-family: $primary-font;
   text-align: center;
   width: 100%;
   color: $white;
+  margin: auto;
+  padding: 30px;
 
   h1 {
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
+    line-height: 1.2em;
     text-shadow: $black 0 0 4px;
+    margin-bottom: 30px;
+  }
+
+  .content-question-answers {
+    display: grid;
+    grid-gap: 15px;
+    grid-template: "a a" auto / minmax(100px, auto);
+    .content-question-answer {
+      text-align: left;
+      padding: 15px 15px 15px 60px;
+      font-size: 20px;
+      position: relative;
+      strong {
+        margin-right: 15px;
+        background: $black;
+        width: 30px;
+        display: block;
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        text-align: center;
+        color: $white;
+      }
+
+      &.correct {
+        border: 1px solid #f00;
+      }
+    }
   }
 }
 
@@ -18,6 +56,12 @@
   max-width: 500px;
   min-width: 300px;
   overflow: hidden;
+  margin: auto;
+
+  font-family: $primary-font;
+  text-align: center;
+  color: $text-color;
+  font-size: 18px;
 
   h1 {
     text-align: center;

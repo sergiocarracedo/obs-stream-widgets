@@ -39,7 +39,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col v-for="(answer, index) in question.answers" cols="12" lg="6" class="d-flex">
+            <v-col v-for="(answer, index) in question.answers" :key="index" cols="12" lg="6" class="d-flex">
               <v-text-field filled :label="`Anwser ${index + 1}`" v-model="question.answers[index].text" class="mr-3"></v-text-field>
               <v-checkbox label="Correct" v-model="question.answers[index].correct"></v-checkbox>
             </v-col>
@@ -48,11 +48,9 @@
       </v-card>
       <v-btn @click="addQuestion" color="primary" class="mb-10 mt-5">Add question</v-btn>
     </template>
-
-    <v-alert type="info" border="left" color="yellow" text>Size 300x100px</v-alert>
     <div class="demo-wrapper">
       <contest-widget
-        :status="status.questionActive"
+        :state="status.question.state"
         :question="currentQuestion"
         :ranking="ranking"
       ></contest-widget>
@@ -65,7 +63,7 @@ import WidgetUrl from '@/components/WidgetUrl.vue'
 import ContestWidget from './Contest.vue'
 import ContestExecute from './ContestExecute.vue'
 import './ContestSettings.scss'
-import {Answer, ContestStatus, Question as QuestionType, RankingUser} from './types'
+import { Answer, ContestStatus, Question as QuestionType, RankingUser } from './types'
 import { mapState } from 'vuex'
 import { Platform } from '@/enums'
 

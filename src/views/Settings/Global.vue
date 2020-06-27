@@ -8,13 +8,12 @@
         <v-row>
           <v-col cols="12">
             <v-radio-group v-model="localPlatform">
-              <v-radio v-for="(value, key) in platforms" :label="key" :value="value"></v-radio>
+              <v-radio :key="key" v-for="(value, key) in platforms" :label="key" :value="value"></v-radio>
             </v-radio-group>
           </v-col>
         </v-row>
       </v-card-text>
     </v-card>
-
 
     <v-card class="mb-8">
       <v-card-title class="heading">

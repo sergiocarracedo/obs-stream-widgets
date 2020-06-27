@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="contest-wrapper">
     <contest-widget
-      :status="status.questionActive"
+      :state="status.question.state"
       :question="currentQuestion"
-      :raking="ranking"
+      :ranking="ranking"
     ></contest-widget>
   </div>
 </template>
@@ -11,7 +11,7 @@
 import Vue from 'vue'
 import ContestWidget from './Contest.vue'
 import { createNamespacedHelpers } from 'vuex'
-import {Question as QuestionType, Question} from '@/widgets/widget-contest/types'
+import { Question as QuestionType } from '@/widgets/widget-contest/types'
 const { mapState } = createNamespacedHelpers('contest')
 
 export default Vue.extend({

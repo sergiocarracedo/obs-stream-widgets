@@ -13,14 +13,25 @@ export interface QuestionAnswer {
 }
 
 export interface RankingUser {
-  id: string
+  id: string | number
   name: string
   points: number
 }
 
 
 export interface ContestStatus {
-  questionIndex: number
-  questionActive: boolean
-  ranking: RankingUser[]
+  ranking: RankingUser[],
+  question: {
+    index: number
+    answered: number
+    state: QuestionState
+  }
+}
+
+
+export enum QuestionState {
+  Ready = 'ready',
+  Active = 'active',
+  Finished = 'finished',
+  Ranking = 'ranking'
 }

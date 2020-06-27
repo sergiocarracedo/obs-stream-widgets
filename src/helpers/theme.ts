@@ -15,5 +15,7 @@ export default (): string => {
   css.push(`.primary-light-border { border-color: ${theme.primaryLight};}`)
   css.push(`.primary-light-bg { background-color: ${theme.primaryLight};}`)
 
+  css.push('.text-dark { color: #000 }')
+
   return css.join('\n')
 }

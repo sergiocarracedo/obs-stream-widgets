@@ -67,6 +67,7 @@
     "fibers": "^4.0.2",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",
+    "sireno-grid": "^0.3.0",
     "typescript": "^3.9.5",
     "vue-cli-plugin-vuetify": "^2.0.5",
     "vue-loader": "^15.9.2",

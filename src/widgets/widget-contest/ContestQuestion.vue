@@ -1,11 +1,20 @@
 <template>
-  <div class="contest-question" v-if="question">
+  <div class="contest-question">
     <h1>{{ question.title }}</h1>
-    <ul class="content-question-anwsers">
-      <li v-for="(answer, index) in question.answers">
+    <div class="content-question-answers">
+      <div
+        v-for="(answer, index) in question.answers"
+        :key="index"
+        :class="{
+          'content-question-answer': true,
+          'primary-light-bg': showCorrect && !answer.correct,
+          'primary-bg': !showCorrect || answer.correct,
+          'text-dark': showCorrect && !answer.correct
+        }"
+      >
         <strong>{{ String.fromCharCode(65 + index) }}</strong> {{ answer.text }}
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -19,7 +28,8 @@ export default Vue.extend({
   props: {
     question: {
       type: Object as () => Question
-    }
+    },
+    showCorrect: Boolean
   }
 })
 </script>
