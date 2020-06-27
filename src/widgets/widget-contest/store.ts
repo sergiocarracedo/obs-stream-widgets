@@ -27,6 +27,9 @@ const mutations: MutationTree<Map<any>> = {
   SOCKET_SET_CONTEST_STATUS_QUESTION_STATE: (state, questionState: QuestionState) => {
     state.status.question.state = questionState
   },
+  SOCKET_SET_CONTEST_RANKING: (state, ranking: RankingUser[]) => {
+    state.status.ranking = ranking
+  },
   SOCKET_CONTEST_RESET: (state) => {
     state.status = {
       question: JSON.parse(JSON.stringify(question)),

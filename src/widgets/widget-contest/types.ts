@@ -1,10 +1,12 @@
 export interface Answer {
   text: string
   correct: boolean
+  index: number
 }
 export interface Question {
   title: string
   answers: Answer[]
+  index?: number
 }
 
 export interface QuestionAnswer {

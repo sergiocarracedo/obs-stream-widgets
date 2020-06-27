@@ -3,7 +3,7 @@
     <h1>Ranking</h1>
     <ul>
       <li
-        v-for="(item, index) in ranking"
+        v-for="(item, index) in localRanking"
         :class="classes(index)">
         <strong>{{ index + 1 }}</strong>
         {{ item.name }}
@@ -25,6 +25,11 @@ export default Vue.extend({
   props: {
     ranking: {
       type: Array as () => RankingUser[]
+    }
+  },
+  computed: {
+    localRanking (): RankingUser[] {
+      return this.ranking.slice(0, 10)
     }
   },
   data () {

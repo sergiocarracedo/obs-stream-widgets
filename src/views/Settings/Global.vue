@@ -66,6 +66,13 @@
               v-model="localTwitch.channel"
             ></v-text-field>
           </v-col>
+          <v-col cols="12" lg="6">
+            <v-text-field
+              label="Oauth"
+              filled
+              v-model="localTwitch.oauth"
+            ></v-text-field>
+          </v-col>
         </v-row>
       </v-card-text>
     </v-card>

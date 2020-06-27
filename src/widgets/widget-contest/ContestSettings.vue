@@ -52,7 +52,7 @@
       <contest-widget
         :state="status.question.state"
         :question="currentQuestion"
-        :ranking="ranking"
+        :ranking="status.ranking"
       ></contest-widget>
     </div>
   </div>
@@ -94,35 +94,6 @@ export default Vue.extend({
     },
     widgetUrl (): string {
       return `${this.$store.state.basePath}/widget/contest/`
-    },
-    ranking (): RankingUser[] {
-      return [
-        {
-          id: 1,
-          name: 'Sergio Carracedo',
-          points: 1234
-        },
-        {
-          id: 2,
-          name: 'Félix Gómez',
-          points: 1123
-        },
-        {
-          id: 3,
-          name: 'Rolando Caldas',
-          points: 1045
-        },
-        {
-          id: 4,
-          name: 'Fran Iglesias',
-          points: 909
-        },
-        {
-          id: 5,
-          name: 'Catalina Rey',
-          points: 900
-        }
-      ]
     }
   },
   methods: {
@@ -145,7 +116,8 @@ export default Vue.extend({
       for (let i = 0; i < 4; i++) {
         answers.push({
           text: '',
-          correct: false
+          correct: false,
+          index: i
         })
       }
       this.localQuestions.push({
@@ -159,7 +131,8 @@ export default Vue.extend({
         { title: 'Warning' }
       ).then((res: boolean | undefined) => {
         if (res) {
-          this.localQuestions = this.localQuestions.splice(index, 1)
+          console.log(index)
+          this.localQuestions = this.localQuestions.splice(index + 1, 1)
         }
       })
 

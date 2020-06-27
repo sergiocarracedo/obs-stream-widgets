@@ -37,7 +37,7 @@
         Next Question
       </v-btn>
       <v-chip class="ml-5">
-        Answers: {{ currentQuestionAnswers.length }}
+        Answers: {{ currentQuestionAnswerUser.length || 0 }}
       </v-chip>
       <v-spacer></v-spacer>
       <v-btn color="red" @click="resetContest">
@@ -50,15 +50,17 @@
 import Vue from 'vue'
 import tmi from 'tmi.js'
 import { Map } from '@/types'
-import { Question, Answer, Question as QuestionType, QuestionState } from './types'
+import { Question, Answer, Question as QuestionType, QuestionState, RankingUser } from './types'
 import { mapState, createNamespacedHelpers } from 'vuex'
 const contestStateHelper = createNamespacedHelpers('contest')
+const CORRECT_POINTS = [1000, 900, 800, 700, 600]
+const CORRECT_POINTS_DEFAULT = 500
 
 export default Vue.extend({
   name: 'contest-execute',
   data () {
     return {
-      currentQuestionAnswers: {} as Map<string>,
+      currentQuestionAnswerUser: {} as Map<any>,
       QuestionState,
       client: null as any
     }
@@ -82,48 +84,40 @@ export default Vue.extend({
           label
         }
       })
+    },
+    currentQuestionCorrectAnswers (): string[] {
+      return this.$store.getters['contest/currentQuestion'].answers
+        .filter((answer: Answer) => {
+          return answer.correct
+        })
+        .map((answer: Answer) => {
+          return String.fromCharCode(65 + answer.index)
+        })
     }
   },
   methods: {
-    launchQuestion () {
+    onMessage (channel: string, tags: Map<any>, message: any, self: any) {
+      if (self) {
+        return
+      }
+
+      this.insertAnswer(
+        tags['user-id'],
+        tags.displayName || tags.username,
+        message
+      )
+    },
+    async launchQuestion () {
       this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
       this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
-
-      const client = new (tmi as any).Client({
-        options: {
-          debug: false
-        },
-        connection: {
-          reconnect: true,
-          secure: true
-        },
-        identity: {
-          username: this.twitch.cliendId,
-          password: this.twitch.clientSecret
-        },
-        channels: [
-          this.twitch.channel
-        ]
-      }) as any
-      client.connect()
-
-      // client.say(this.twitch.channel, this.currentQuestion.title)
-
+      await this.client.say(this.twitch.channel, '=======================')
+      await this.client.say(this.twitch.channel, this.currentQuestion.title)
+      await this.client.say(this.twitch.channel, '-----------------------')
       this.currentQuestion.answers.forEach((answer: Answer, index:number) => {
-        client.say(this.twitch.channel, `${String.fromCharCode(65 + index)}: ${answer.text}`)
+        this.client.say(this.twitch.channel, `${String.fromCharCode(65 + index)}: ${answer.text}`)
       })
-
-      client.on('message', (channel: string, tags: Map<any>, message: any, self: any) => {
-        if (self) {
-          return
-        }
-
-        this.insertAnswer(
-          tags.id,
-          tags.displayName,
-          message
-        )
-      })
+      await this.client.say(this.twitch.channel, '-----------------------')
+      this.client.on('chat', this.onMessage)
     },
     showRanking () {
       this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Ranking)
@@ -137,8 +131,12 @@ export default Vue.extend({
         this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Ready)
       }
     },
-    finishQuestion () {
+    async finishQuestion () {
+      console.log(this.client)
+      // this.client.off('chat', this.onMessage)
+      await this.client.say(this.twitch.channel, '====== Pregunta finalizada =====')
       this.answersRecount()
+      this.currentQuestionAnswerUser = {}
       this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Finished)
       this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Finished)
     },
@@ -153,19 +151,68 @@ export default Vue.extend({
         }
       })
     },
-    answersRecount () {
-      return null
-    },
     insertAnswer (id: string, name: string, answer: string) {
       // check if user has another response
-      if (!this.currentQuestionAnswers[id]) {
-        this.currentQuestionAnswers[id] = answer.substr(0, 1).toUpperCase()
+      if (!this.currentQuestionAnswerUser[id]) {
+        this.currentQuestionAnswerUser[id] = {
+          answer: answer.substr(0, 1).toUpperCase(),
+          name,
+          id
+        }
       }
+      console.log(this.currentQuestionAnswerUser)
+    },
+    answersRecount () {
+      const ranking = JSON.parse(JSON.stringify(this.status.ranking))
+      let currentCurrentIndex = 0
+      Object.entries(this.currentQuestionAnswerUser).forEach(([id, answerUser]) => {
+        let item = ranking.find((rankingUser: RankingUser) => rankingUser.id === id)
+        if (!item) {
+          item = {
+            id: answerUser.id,
+            name: answerUser.name,
+            points: 0
+          }
+          ranking.push(item)
+        }
+
+        if (this.currentQuestionCorrectAnswers.indexOf(answerUser.answer) !== -1) {
+          item.points += CORRECT_POINTS[currentCurrentIndex++] || CORRECT_POINTS_DEFAULT
+        }
+      })
+
+      // Sort
+      ranking.sort((a: RankingUser, b: RankingUser) => {
+        console.log(a.points - b.points, a.points, b.points)
+        return a.points - b.points
+      })
+      this.$store.commit('contest/SOCKET_SET_CONTEST_RANKING', ranking)
+      this.$socket.client.emit('SET_CONTEST_RANKING', ranking)
     }
   },
-  beforeDestroy() {
+  async beforeMount () {
+    this.client = new (tmi as any).Client({
+      options: {
+        clientId: this.twitch.cliendId,
+        debug: false
+      },
+      connection: {
+        reconnect: true,
+        secure: true
+      },
+      identity: {
+        username: `${this.twitch.channel}`,
+        password: this.twitch.oauth
+      },
+      channels: [
+        this.twitch.channel
+      ]
+    }) as any
+    await this.client.connect()
+  },
+  beforeDestroy () {
     if (this.client) {
-      this.client.disconect()
+      // this.client.disconect()
     }
   }
 })

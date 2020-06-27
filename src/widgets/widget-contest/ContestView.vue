@@ -11,7 +11,7 @@
 import Vue from 'vue'
 import ContestWidget from './Contest.vue'
 import { createNamespacedHelpers } from 'vuex'
-import { Question as QuestionType } from '@/widgets/widget-contest/types'
+import { Question as QuestionType, RankingUser } from '@/widgets/widget-contest/types'
 const { mapState } = createNamespacedHelpers('contest')
 
 export default Vue.extend({
@@ -24,8 +24,8 @@ export default Vue.extend({
       'questions',
       'status'
     ]),
-    ranking (): any[] {
-      return []
+    ranking (): RankingUser[] {
+      return this.status.ranking
     },
     currentQuestion (): QuestionType {
       return this.$store.getters['contest/currentQuestion']

@@ -150,10 +150,6 @@ export default Vue.extend({
           reconnect: true,
           secure: true
         },
-        // identity: {
-        //   username: 'bot-name',
-        //   password: 'oauth:my-bot-token'
-        // },
         channels: [
           this.twitchSettings.channel
         ]
@@ -167,14 +163,11 @@ export default Vue.extend({
         this.insertMessage(
           tags.id,
           {
-            name: tags.displayName,
+            name: tags.displayName || tags.username,
             profileImageUrl: ''
           },
           message
         )
-        // if (message.toLowerCase() === '!hello') {
-        //   client.say(channel, `@${tags.username}, heya!`);
-        // }
       })
     },
     exitChat (value: boolean) {
