@@ -166,7 +166,7 @@ export default Vue.extend({
         .sort((a: Map<any>, b: Map<any>) => a.timestamp - b.timestamp)
       let currentCurrentIndex = 0
 
-      awnsers.forEach((answerUser: Map<any>) => {
+      answers.forEach((answerUser: Map<any>) => {
         let item = ranking.find((rankingUser: RankingUser) => rankingUser.id === answerUser.id)
         if (!item) {
           item = {
