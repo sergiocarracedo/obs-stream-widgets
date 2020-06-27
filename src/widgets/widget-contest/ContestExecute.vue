@@ -37,7 +37,7 @@
         Next Question
       </v-btn>
       <v-chip class="ml-5">
-        Answers: {{ currentQuestionAnswerUser.length || 0 }}
+        Answers: {{ Object.keys(currentQuestionAnswerUser).length || 0 }}
       </v-chip>
       <v-spacer></v-spacer>
       <v-btn color="red" @click="resetContest">
@@ -159,7 +159,6 @@ export default Vue.extend({
           id
         }
       }
-      console.log(this.currentQuestionAnswerUser)
     },
     answersRecount () {
       const ranking = JSON.parse(JSON.stringify(this.status.ranking))
@@ -182,7 +181,6 @@ export default Vue.extend({
 
       // Sort
       ranking.sort((a: RankingUser, b: RankingUser) => {
-        console.log(a.points - b.points, a.points, b.points)
         return a.points - b.points
       })
       this.$store.commit('contest/SOCKET_SET_CONTEST_RANKING', ranking)
