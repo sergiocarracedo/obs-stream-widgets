@@ -1,0 +1,2 @@
+export const CORRECT_POINTS = [1000, 900, 800, 700, 600]
+export const CORRECT_POINTS_DEFAULT = 500

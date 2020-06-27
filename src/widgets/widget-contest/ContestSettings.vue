@@ -53,6 +53,8 @@
         :state="status.question.state"
         :question="currentQuestion"
         :ranking="status.ranking"
+        :index="status.question.index + 1"
+        :total="questions.length"
       ></contest-widget>
     </div>
   </div>
@@ -66,6 +68,7 @@ import './ContestSettings.scss'
 import { Answer, ContestStatus, Question as QuestionType, RankingUser } from './types'
 import { mapState } from 'vuex'
 import { Platform } from '@/enums'
+import { CORRECT_POINTS_DEFAULT, CORRECT_POINTS } from './consts'
 
 export default Vue.extend({
   name: 'Questions-settings',
@@ -77,7 +80,6 @@ export default Vue.extend({
   data () {
     return {
       localQuestions: [] as QuestionType[],
-      contestActive: false,
       Platform
     }
   },
@@ -94,6 +96,15 @@ export default Vue.extend({
     },
     widgetUrl (): string {
       return `${this.$store.state.basePath}/widget/contest/`
+    },
+    contestActive: {
+      get (): boolean {
+        return this.status.active
+      },
+      set (active: boolean) {
+        this.$store.commit('contest/SOCKET_SET_CONTEST_ACTIVE', active)
+        this.$socket.client.emit('SET_CONTEST_ACTIVE', active)
+      }
     }
   },
   methods: {
@@ -131,7 +142,6 @@ export default Vue.extend({
         { title: 'Warning' }
       ).then((res: boolean | undefined) => {
         if (res) {
-          console.log(index)
           this.localQuestions = this.localQuestions.splice(index + 1, 1)
         }
       })
@@ -154,9 +164,7 @@ export default Vue.extend({
       }
     },
     contestActive (newValue) {
-      if (!newValue) {
-        this.$store.commit('contest/SOCKET_CONTEST_RESET')
-      }
+      this.$store.commit('contest/SOCKET_CONTEST_RESET')
     }
   },
   beforeMount () {

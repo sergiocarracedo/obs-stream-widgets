@@ -1,6 +1,6 @@
 <template>
   <div class="contest-question">
-    <h1>{{ question.title }}</h1>
+    <h1><span v-if="index" class="primary-light-color">{{ index }}. </span>{{ question.title }}</h1>
     <div class="content-question-answers">
       <div
         v-for="(answer, index) in question.answers"
@@ -29,6 +29,7 @@ export default Vue.extend({
     question: {
       type: Object as () => Question
     },
+    index: Number,
     showCorrect: Boolean
   }
 })

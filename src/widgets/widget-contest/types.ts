@@ -23,6 +23,7 @@ export interface RankingUser {
 
 export interface ContestStatus {
   ranking: RankingUser[],
+  active: boolean,
   question: {
     index: number
     answered: number

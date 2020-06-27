@@ -12,29 +12,34 @@ const question = {
 const state: Map<any> = {
   questions: [] as Question[],
   status: {
+    active: false,
     question: JSON.parse(JSON.stringify(question)),
     ranking: [] as RankingUser[]
   } as ContestStatus
 }
 
 const mutations: MutationTree<Map<any>> = {
-  SOCKET_SET_QUESTIONS: (state, questions: Question[]) => {
+  SOCKET_SET_QUESTIONS: (state: any, questions: Question[]) => {
     state.questions = questions
   },
-  SOCKET_SET_CONTEST_STATUS_QUESTION_INDEX: (state, index: number) => {
+  SOCKET_SET_CONTEST_STATUS_QUESTION_INDEX: (state: any, index: number) => {
     state.status.question.index = index
   },
-  SOCKET_SET_CONTEST_STATUS_QUESTION_STATE: (state, questionState: QuestionState) => {
+  SOCKET_SET_CONTEST_STATUS_QUESTION_STATE: (state: any, questionState: QuestionState) => {
     state.status.question.state = questionState
   },
-  SOCKET_SET_CONTEST_RANKING: (state, ranking: RankingUser[]) => {
+  SOCKET_SET_CONTEST_RANKING: (state: any, ranking: RankingUser[]) => {
     state.status.ranking = ranking
   },
-  SOCKET_CONTEST_RESET: (state) => {
+  SOCKET_CONTEST_RESET: (state: any) => {
     state.status = {
       question: JSON.parse(JSON.stringify(question)),
-      ranking: [] as RankingUser[]
+      ranking: [] as RankingUser[],
+      active: state.status.active
     }
+  },
+  SOCKET_SET_CONTEST_ACTIVE: (state: any, active: boolean) => {
+    state.status.active = active
   }
 }
 

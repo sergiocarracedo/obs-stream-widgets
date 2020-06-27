@@ -53,8 +53,7 @@ import { Map } from '@/types'
 import { Question, Answer, Question as QuestionType, QuestionState, RankingUser } from './types'
 import { mapState, createNamespacedHelpers } from 'vuex'
 const contestStateHelper = createNamespacedHelpers('contest')
-const CORRECT_POINTS = [1000, 900, 800, 700, 600]
-const CORRECT_POINTS_DEFAULT = 500
+import { CORRECT_POINTS_DEFAULT, CORRECT_POINTS } from './consts'
 
 export default Vue.extend({
   name: 'contest-execute',
@@ -110,13 +109,13 @@ export default Vue.extend({
     async launchQuestion () {
       this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
       this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
-      await this.client.say(this.twitch.channel, '=======================')
+      await this.client.say(this.twitch.channel, '=================')
       await this.client.say(this.twitch.channel, this.currentQuestion.title)
-      await this.client.say(this.twitch.channel, '-----------------------')
+      await this.client.say(this.twitch.channel, '-----------------')
       this.currentQuestion.answers.forEach((answer: Answer, index:number) => {
         this.client.say(this.twitch.channel, `${String.fromCharCode(65 + index)}: ${answer.text}`)
       })
-      await this.client.say(this.twitch.channel, '-----------------------')
+      await this.client.say(this.twitch.channel, '-----------------')
       this.client.on('chat', this.onMessage)
     },
     showRanking () {
@@ -154,6 +153,7 @@ export default Vue.extend({
       // check if user has another response
       if (!this.currentQuestionAnswerUser[id]) {
         this.currentQuestionAnswerUser[id] = {
+          timestamp: +new Date(),
           answer: answer.trim().substr(0, 1).toUpperCase(),
           name,
           id
@@ -162,9 +162,12 @@ export default Vue.extend({
     },
     answersRecount () {
       const ranking = JSON.parse(JSON.stringify(this.status.ranking))
+      const answers = Array.from(Object.values(this.currentQuestionAnswerUser))
+        .sort((a: Map<any>, b: Map<any>) => a.timestamp - b.timestamp)
       let currentCurrentIndex = 0
-      Object.entries(this.currentQuestionAnswerUser).forEach(([id, answerUser]) => {
-        let item = ranking.find((rankingUser: RankingUser) => rankingUser.id === id)
+
+      awnsers.forEach((answerUser: Map<any>) => {
+        let item = ranking.find((rankingUser: RankingUser) => rankingUser.id === answerUser.id)
         if (!item) {
           item = {
             id: answerUser.id,
@@ -181,7 +184,7 @@ export default Vue.extend({
 
       // Sort
       ranking.sort((a: RankingUser, b: RankingUser) => {
-        return a.points - b.points
+        return b.points - a.points
       })
       this.$store.commit('contest/SOCKET_SET_CONTEST_RANKING', ranking)
       this.$socket.client.emit('SET_CONTEST_RANKING', ranking)

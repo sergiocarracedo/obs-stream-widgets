@@ -4,6 +4,8 @@
       :state="status.question.state"
       :question="currentQuestion"
       :ranking="ranking"
+      :index="status.question.index + 1"
+      :total="questions.length"
     ></contest-widget>
   </div>
 </template>

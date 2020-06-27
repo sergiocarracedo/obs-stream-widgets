@@ -4,6 +4,7 @@ import widgets from '../widgets'
 import GlobalSettings from '../views/Settings/Global.vue'
 import ThemeSettings from '../views/Settings/Theme.vue'
 import ImportExportSettings from '../views/Settings/ImportExport.vue'
+import Store from '../store'
 
 Vue.use(VueRouter)
 
@@ -60,10 +61,18 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/') {
-    next('/settings/global')
+  if (Store.state.contest.status.active && !window.confirm('Contest is active, if you leave you will lost answers. Are you sure?')) {
+
+  } else {
+    if (Store.state.contest.status.active) {
+      Store.commit('contest/SOCKET_SET_CONTEST_ACTIVE', false)
+    }
+
+    if (to.path === '/') {
+      next('/settings/global')
+    }
+    next()
   }
-  next()
 })
 
 export default router
