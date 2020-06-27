@@ -132,8 +132,7 @@ export default Vue.extend({
       }
     },
     async finishQuestion () {
-      console.log(this.client)
-      // this.client.off('chat', this.onMessage)
+      this.client.removeListener('chat', this.onMessage)
       await this.client.say(this.twitch.channel, '====== Pregunta finalizada =====')
       this.answersRecount()
       this.currentQuestionAnswerUser = {}
@@ -155,7 +154,7 @@ export default Vue.extend({
       // check if user has another response
       if (!this.currentQuestionAnswerUser[id]) {
         this.currentQuestionAnswerUser[id] = {
-          answer: answer.substr(0, 1).toUpperCase(),
+          answer: answer.trim().substr(0, 1).toUpperCase(),
           name,
           id
         }
@@ -212,7 +211,7 @@ export default Vue.extend({
   },
   beforeDestroy () {
     if (this.client) {
-      // this.client.disconect()
+      this.client.disconnect()
     }
   }
 })
