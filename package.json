@@ -8,7 +8,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "start": "concurrently -n VUE,SOCKET_SERVER \"yarn serve\" \"node server.js\"",
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8081",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
