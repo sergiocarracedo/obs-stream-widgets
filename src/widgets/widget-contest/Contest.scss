@@ -109,6 +109,20 @@
     color: $white;
   }
 
+
+}
+
+.contest-non-active {
+  h1 {
+    text-align: center;
+    font-size: 35px;
+    line-height: 1.2em;
+    text-shadow: $black 0 0 4px;
+    margin-bottom: 30px;
+    padding: 15px 30px;
+    color: $white;
+  }
+
   .help {
     padding: 20px;
     min-width: 300px;
@@ -121,12 +135,20 @@
     ul {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 0 auto;
+      max-width: 300px;
       li {
         display: flex;
         .spacer {
-         flex: 1;
+          flex: 1;
         }
+      }
+    }
+
+    .block {
+      margin-bottom: 20px;
+      p {
+        margin-bottom: 0.8em;
       }
     }
   }

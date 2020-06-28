@@ -6,6 +6,7 @@
       :ranking="ranking"
       :index="status.question.index + 1"
       :total="questions.length"
+      :active="status.active"
     ></contest-widget>
   </div>
 </template>

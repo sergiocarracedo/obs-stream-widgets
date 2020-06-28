@@ -110,7 +110,7 @@ export default Vue.extend({
       this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
       this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
       await this.client.say(this.twitch.channel, '=================')
-      await this.client.say(this.twitch.channel, this.currentQuestion.title)
+      await this.client.say(this.twitch.channel, `${this.status.question.index}. ${this.currentQuestion.title}`)
       await this.client.say(this.twitch.channel, '-----------------')
       this.currentQuestion.answers.forEach((answer: Answer, index:number) => {
         this.client.say(this.twitch.channel, `${String.fromCharCode(65 + index)}: ${answer.text}`)
