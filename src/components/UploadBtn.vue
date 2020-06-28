@@ -55,7 +55,8 @@ export default Vue.extend({
         if (this.maxWidth || this.maxHeight) {
           const imageResized = await readAndCompressImage(file, {
             maxWidth: 300,
-            maxHeight: 300
+            maxHeight: 300,
+            mimeType: file.tyle
           })
 
           if (this.convertImagesToBase64) {

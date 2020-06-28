@@ -1,5 +1,5 @@
 <template>
-  <div :class="classes" v-if="talk">
+  <div :class="classes">
     <div class="talk">
       <div class="speaker">
         <div class="picture-wrapper primary-light-bg primary-border" v-if="talk.speaker.picture" :style="{ backgroundImage: `url(${talk.speaker.picture})` }">
