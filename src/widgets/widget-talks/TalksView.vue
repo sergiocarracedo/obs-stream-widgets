@@ -23,7 +23,9 @@ export default Vue.extend({
     ]),
     talk (): TalkType {
       const params = new URLSearchParams(window.location.search)
-      return this.talks[params.get('talk') || this.selectedTalk]
+      const talk = +params.get('talk')!
+
+      return this.talks[talk || this.selectedTalk]
     },
     mode (): string {
       const params = new URLSearchParams(window.location.search)

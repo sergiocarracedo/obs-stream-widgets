@@ -40,7 +40,7 @@ export default Vue.extend({
       classes[`mode-${this.mode || 'normal'}`] = true
 
       if (this.mode === 'banner') {
-        classes[`primary-bg`] = true
+        classes['primary-bg'] = true
       }
       return classes
     }

@@ -29,6 +29,8 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Application</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn small color="primary" @click="updateStateAllInstances">Update state in all instances</v-btn>
     </v-app-bar>
     <v-main>
       <v-container
@@ -64,6 +66,12 @@ export default Vue.extend({
     return {
       drawer: true,
       menu: [] as Map<any>[]
+    }
+  },
+  methods: {
+    updateStateAllInstances () {
+      // Replace state to force to send to all remote instances
+      this.$store.replaceState(JSON.parse(JSON.stringify(this.$store.state)))
     }
   },
   beforeMount (): void {

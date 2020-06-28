@@ -61,7 +61,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if ((Store.state as any).contest.status.active && !window.confirm('Contest is active, if you leave you will lost answers. Are you sure?')) {
+  const isSettingsPage = to.meta && to.meta.layout
+  if (isSettingsPage && (Store.state as any).contest.status.active && !window.confirm('Contest is active, if you leave you will lost answers. Are you sure?')) {
 
   } else {
     if ((Store.state as any).contest.status.active) {
