@@ -1,7 +1,7 @@
 <template>
   <div class="widget-url d-flex">
     <v-text-field
-      label="Widget url"
+      :label="label || 'Widget url'"
       color="primary"
       disabled
       :value="url"
@@ -52,7 +52,8 @@ export default defineComponent({
     url: {
       type: String,
       required: true
-    }
+    },
+    label: String
   }
 })
 </script>

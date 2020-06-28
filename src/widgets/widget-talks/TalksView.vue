@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <talk-widget
-      :talk="talk"
-    ></talk-widget>
-  </div>
+  <talk-widget
+    :talk="talk"
+    :mode="mode"
+  ></talk-widget>
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -25,6 +24,10 @@ export default Vue.extend({
     talk (): TalkType {
       const params = new URLSearchParams(window.location.search)
       return this.talks[params.get('talk') || this.selectedTalk]
+    },
+    mode (): string {
+      const params = new URLSearchParams(window.location.search)
+      return params.get('mode') || ''
     }
   }
 })

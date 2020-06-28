@@ -61,10 +61,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (Store.state.contest.status.active && !window.confirm('Contest is active, if you leave you will lost answers. Are you sure?')) {
+  if ((Store.state as any).contest.status.active && !window.confirm('Contest is active, if you leave you will lost answers. Are you sure?')) {
 
   } else {
-    if (Store.state.contest.status.active) {
+    if ((Store.state as any).contest.status.active) {
       Store.commit('contest/SOCKET_SET_CONTEST_ACTIVE', false)
     }
 

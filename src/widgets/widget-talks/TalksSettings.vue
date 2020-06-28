@@ -9,9 +9,10 @@
           <v-col cols="12" lg="6">
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
+          <v-col cols="12" lg="6">
+            <widget-url label="Widget url banner mode" :url="`${widgetUrl}?talk=${index}`"></widget-url>
+          </v-col>
         </v-row>
-
-        <v-btn @click="addTalk">Add talk</v-btn>
       </v-card-text>
     </v-card>
 
@@ -29,10 +30,10 @@
         </v-card-title>
         <v-card-text>
           <v-row>
-            <v-col cols="12" lg="3">
+            <v-col cols="12" lg="5">
               <v-text-field v-model="talk.title" label="Title" filled></v-text-field>
             </v-col>
-            <v-col cols="12" lg="3">
+            <v-col cols="12" lg="4">
               <v-text-field v-model="talk.speaker.name" label="Ponente" filled></v-text-field>
             </v-col>
             <v-col cols="12" lg="3">
@@ -46,17 +47,30 @@
                 <v-img :src="talk.speaker.picture"></v-img>
               </v-avatar>
             </v-col>
-            <v-col cols="12" lg="3">
+          </v-row>
+          <v-row>
+            <v-col cols="12" lg="6">
               <widget-url :url="`${widgetUrl}?talk=${index}`"></widget-url>
+            </v-col>
+            <v-col cols="12" lg="6">
+              <widget-url label="Widget url banner mode" :url="`${widgetUrl}?talk=${index}&mode=banner`"></widget-url>
             </v-col>
           </v-row>
         </v-card-text>
       </v-card>
     </v-radio-group>
-    <v-alert type="info" border="left" color="yellow" text>Size 300x100px</v-alert>
+    <v-btn color="primary" @click="addTalk" class="mb-10">Add talk</v-btn>
+    <div class="demo-wrapper mb-5">
+      <talk-widget
+        :talk="talk"
+      ></talk-widget>
+    </div>
+
+    <h6 class="text-h6">Banner mode</h6>
     <div class="demo-wrapper">
       <talk-widget
         :talk="talk"
+        mode="banner"
       ></talk-widget>
     </div>
   </div>
@@ -112,7 +126,14 @@ export default Vue.extend({
       })
     },
     removeTalk (index: number) {
-      this.talks = this.talks.splice(index, 1)
+      this.$confirm(
+        'Do you really want to delete talk?',
+        { title: 'Warning' }
+      ).then((res: boolean | undefined) => {
+        if (res) {
+          this.talks = this.talks.splice(index, 1)
+        }
+      })
     },
     onUpload (image: string, index: number) {
       this.talks[index].speaker.picture = image

@@ -1,5 +1,5 @@
 <template>
-  <div class="talk-wrapper" v-if="talk">
+  <div :class="classes" v-if="talk">
     <div class="talk">
       <div class="speaker">
         <div class="picture-wrapper primary-light-bg primary-border" v-if="talk.speaker.picture" :style="{ backgroundImage: `url(${talk.speaker.picture})` }">
@@ -14,6 +14,7 @@
 import Vue from 'vue'
 import './Talks.scss'
 import { Talk } from './types'
+import { Map } from '@/types'
 
 export default Vue.extend({
   name: 'talk',
@@ -21,10 +22,29 @@ export default Vue.extend({
   props: {
     talk: {
       type: Object as () => Talk[]
+    },
+    mode: {
+      type: String,
+      default: 'normal'
     }
   },
   data () {
     return {}
+  },
+  computed: {
+    classes (): Map<boolean> {
+      const classes = {
+        'talk-wrapper': true
+      } as Map<boolean>
+
+      classes[`mode-${this.mode || 'normal'}`] = true
+
+      if (this.mode === 'banner') {
+        classes[`primary-bg`] = true
+      }
+      return classes
+    }
+
   }
 })
 </script>

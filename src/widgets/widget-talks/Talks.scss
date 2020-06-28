@@ -1,42 +1,94 @@
 @import '../variables';
 
 .talk-wrapper {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-}
-
-.talk {
-  font-family: $primary-font;
-  text-align: center;
-  width: 100%;
-  color: $white;
-
-  h1 {
-    text-align: center;
-    font-size: 40px;
-    text-shadow: $black 0 0 4px;
+  .talk {
+    font-family: $primary-font;
+    width: 100%;
+    color: $white;
+    .speaker {
+      .picture-wrapper {
+        margin: 0 auto 7px auto;
+        border-radius: 9999px;
+        border-width: 5px;
+        border-style: solid;
+        width: 50px;
+        height: 50px;
+        position: relative;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center center;
+      }
+    }
   }
 
-  .speaker {
-    margin-bottom: 15px;
-    h3 {
+  &.mode-normal {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+
+    .talk {
       text-align: center;
-      font-size: 25px;
-      text-shadow: $black 0 0 4px;
-    }
-    .picture-wrapper {
-      margin: 0 auto 7px auto;
-      border-radius: 9999px;
-      border-width: 5px;
-      border-style: solid;
-      width: 80px;
-      height: 80px;
-      position: relative;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center center;
+
+      h1 {
+        text-align: center;
+        font-size: 40px;
+        text-shadow: $black 0 0 4px;
+      }
+
+      .speaker {
+        margin-bottom: 15px;
+
+        h3 {
+          text-align: center;
+          font-size: 25px;
+          text-shadow: $black 0 0 4px;
+        }
+
+        .picture-wrapper {
+          width: 80px;
+          height: 80px;
+        }
+      }
     }
   }
 
+  &.mode-banner {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 5px 15px;
+    .talk {
+      display: flex;
+      align-items: center;
+
+      h1 {
+        text-align: center;
+        font-size: 20px;
+        margin: 0;
+      }
+
+
+      .speaker {
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+
+        h3 {
+          text-align: center;
+          font-size: 18px;
+          margin: 0;
+        }
+
+        .picture-wrapper {
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+        }
+
+
+      }
+    }
+  }
 }
