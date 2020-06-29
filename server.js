@@ -10,6 +10,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log(`A user connected with socket id ${socket.id}`)
+  socket.broadcast.emit('userConnected', socket.id)
 
   socket.on('disconnect', () => {
     socket.broadcast.emit('user-disconnected', socket.id)

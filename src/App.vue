@@ -21,8 +21,10 @@ export default Vue.extend({
     }
   },
   sockets: {
-    connect () {
-      console.log('new client connected')
+    userConnected (id) {
+      if (this.$route.meta && this.$route.meta.layout === 'settings') {
+        this.$socket.client.emit('STORE_STATE', this.$store.state)
+      }
     },
     STORE_STATE (val) {
       this.$store.replaceState(val)
