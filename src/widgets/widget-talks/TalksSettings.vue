@@ -10,7 +10,7 @@
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
           <v-col cols="12" lg="6">
-            <widget-url label="Widget url banner mode" :url="`${widgetUrl}?talk=${index}`"></widget-url>
+            <widget-url label="Widget url banner mode" :url="`${widgetUrl}?mode=banner`"></widget-url>
           </v-col>
         </v-row>
       </v-card-text>
