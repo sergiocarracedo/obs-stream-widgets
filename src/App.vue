@@ -19,6 +19,14 @@ export default Vue.extend({
       }
       return 'default-layout'
     }
+  },
+  sockets: {
+    connect () {
+      console.log('new client connected')
+    },
+    STORE_STATE (val) {
+      this.$store.replaceState(val)
+    }
   }
 })
 </script>

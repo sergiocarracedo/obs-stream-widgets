@@ -70,8 +70,7 @@ export default Vue.extend({
   },
   methods: {
     updateStateAllInstances () {
-      // Replace state to force to send to all remote instances
-      this.$store.replaceState(JSON.parse(JSON.stringify(this.$store.state)))
+      this.$socket.client.emit('STORE_STATE', this.$store.state)
     }
   },
   beforeMount (): void {

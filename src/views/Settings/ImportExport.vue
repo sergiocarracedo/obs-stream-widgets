@@ -66,7 +66,11 @@ export default Vue.extend({
   },
   computed: {
     downloadStateUrl (): string {
-      const data = new Blob([JSON.stringify(this.$store.state)], { type: 'text/json '})
+      const data = new Blob([JSON.stringify(this.$store.state)], {
+        encoding: 'UTF-8',
+        type: 'text/json'
+      } as any)
+
       return window.URL.createObjectURL(data)
     }
   },
@@ -83,6 +87,7 @@ export default Vue.extend({
       read.onloadend = () => {
         const result = JSON.parse(read.result as string)
         this.$store.replaceState(result)
+        this.$socket.client.emit('STORE_STATE', this.$store.state)
         this.snackbar = true
       }
     }

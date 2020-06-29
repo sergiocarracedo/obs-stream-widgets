@@ -18,6 +18,7 @@ io.on('connection', (socket) => {
   const onevent = socket.onevent
   socket.onevent = function (packet) {
     const args = packet.data || []
+    console.log(`Packet data ${packet.data}`)
     onevent.call(this, packet)  // original call
     packet.data = ["*"].concat(args)
     onevent.call(this, packet) // additional call to catch-all
