@@ -82,7 +82,7 @@ export default Vue.extend({
       const file = e.target.files[0]
       const read = new FileReader()
 
-      read.readAsBinaryString(file)
+      read.readAsText(file)
 
       read.onloadend = () => {
         const result = JSON.parse(read.result as string)

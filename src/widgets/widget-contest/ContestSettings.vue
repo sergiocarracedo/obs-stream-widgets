@@ -143,7 +143,9 @@ export default Vue.extend({
         { title: 'Warning' }
       ).then((res: boolean | undefined) => {
         if (res) {
-          this.localQuestions = this.localQuestions.splice(index + 1, 1)
+          console.log(index)
+          console.log(this.localQuestions.splice(index, 1))
+          // this.localQuestions = this.localQuestions.splice(index + 1, 1)
         }
       })
 
