@@ -21,7 +21,7 @@ export default Vue.extend({
   components: {},
   props: {
     talk: {
-      type: Object as () => Talk[]
+      type: Object as () => Talk
     },
     mode: {
       type: String,

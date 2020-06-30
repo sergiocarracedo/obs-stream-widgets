@@ -6,11 +6,14 @@
       </v-card-title>
       <v-card-text>
         <v-row>
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="4">
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
-          <v-col cols="12" lg="6">
+          <v-col cols="12" lg="4">
             <widget-url label="Widget url banner mode" :url="`${widgetUrl}?mode=banner`"></widget-url>
+          </v-col>
+          <v-col cols="12" lg="4">
+            <widget-url label="Widget url cycle" :url="`${widgetUrl}?cycle`"></widget-url>
           </v-col>
         </v-row>
       </v-card-text>
