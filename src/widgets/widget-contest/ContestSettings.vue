@@ -177,7 +177,7 @@ export default Vue.extend({
       if (this.contestActive) {
         return 'The contest is active if. Are you sure?'
       } else {
-        return false
+        return
       }
     },
     onImportClick () {
