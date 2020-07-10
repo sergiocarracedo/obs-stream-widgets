@@ -9,6 +9,24 @@
           <v-col cols="12" lg="6">
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
+          <v-col cols="12" lg="6" class="pt-5">
+            Questions
+            <v-btn :href="downloadStateUrl" download="obs-stream-widgets-questions.json" class="ml-2 mr-2">
+              <v-icon left>mdi-cloud-download</v-icon>Export
+            </v-btn>
+
+            <v-btn @click="onImportClick">
+              <v-icon left>mdi-cloud-upload</v-icon>
+              Import
+            </v-btn>
+            <input
+              ref="uploader"
+              class="d-none"
+              type="file"
+              accept="text/json"
+              @change="onFileChanged"
+            >
+          </v-col>
         </v-row>
 
         <v-btn v-if="!contestActive" color="primary" @click="startContest">Start contest</v-btn>
@@ -106,6 +124,14 @@ export default Vue.extend({
         this.$store.commit('contest/SOCKET_SET_CONTEST_ACTIVE', active)
         this.$socket.client.emit('SET_CONTEST_ACTIVE', active)
       }
+    },
+    downloadStateUrl (): string {
+      const data = new Blob([JSON.stringify(this.$store.state.contest.questions)], {
+        encoding: 'UTF-8',
+        type: 'text/json'
+      } as any)
+
+      return window.URL.createObjectURL(data)
     }
   },
   methods: {
@@ -143,18 +169,29 @@ export default Vue.extend({
         { title: 'Warning' }
       ).then((res: boolean | undefined) => {
         if (res) {
-          console.log(index)
-          console.log(this.localQuestions.splice(index, 1))
-          // this.localQuestions = this.localQuestions.splice(index + 1, 1)
+          this.localQuestions.splice(index, 1)
         }
       })
-
     },
     confirmExit () {
       if (this.contestActive) {
         return 'The contest is active if. Are you sure?'
       } else {
         return false
+      }
+    },
+    onImportClick () {
+      (this.$refs.uploader as HTMLElement).click()
+    },
+    onFileChanged (e: any) {
+      const file = e.target.files[0]
+      const read = new FileReader()
+
+      read.readAsText(file)
+
+      read.onloadend = () => {
+        const result = JSON.parse(read.result as string)
+        this.localQuestions = result
       }
     }
   },
