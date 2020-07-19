@@ -21,7 +21,7 @@
     "dayjs": "^1.8.24",
     "express": "^4.17.1",
     "global": "^4.4.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "roboto-fontface": "*",
     "socket.io": "^2.3.0",
     "tmi.js": "^1.5.0",
