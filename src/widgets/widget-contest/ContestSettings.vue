@@ -79,7 +79,7 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Widget from '@/mixins/Widget'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import ContestWidget from './Contest.vue'
 import ContestExecute from './ContestExecute.vue'
@@ -87,9 +87,8 @@ import './ContestSettings.scss'
 import { Answer, ContestStatus, Question as QuestionType, RankingUser } from './types'
 import { mapState } from 'vuex'
 import { Platform } from '@/enums'
-import { CORRECT_POINTS_DEFAULT, CORRECT_POINTS } from './consts'
 
-export default Vue.extend({
+export default Widget.extend({
   name: 'Questions-settings',
   components: {
     WidgetUrl,
@@ -121,8 +120,7 @@ export default Vue.extend({
         return this.status.active
       },
       set (active: boolean) {
-        this.$store.commit('contest/SOCKET_SET_CONTEST_ACTIVE', active)
-        this.$socket.client.emit('SET_CONTEST_ACTIVE', active)
+        this.commitAndEmit('SET_CONTEST_ACTIVE', 'contest', active)
       }
     },
     downloadStateUrl (): string {
@@ -199,12 +197,11 @@ export default Vue.extend({
     localQuestions: {
       deep: true,
       handler (newValue: any) {
-        this.$store.commit('contest/SOCKET_SET_QUESTIONS', newValue)
-        this.$socket.client.emit('SET_QUESTIONS', newValue)
+        this.commitAndEmit('SET_QUESTIONS', 'contest', newValue)
       }
     },
     contestActive (newValue) {
-      this.$store.commit('contest/SOCKET_CONTEST_RESET')
+      this.commitAndEmit('CONTEST_RESET', 'contest')
     }
   },
   beforeMount () {

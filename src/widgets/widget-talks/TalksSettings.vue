@@ -79,14 +79,14 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Widget from '@/mixins/Widget'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import TalkWidget from './Talk.vue'
 import './TalksSettings.scss'
 import { Talk as TalkType } from './types'
 import UploadBtn from '@/components/UploadBtn.vue'
 
-export default Vue.extend({
+export default Widget.extend({
   name: 'talks-settings',
   components: {
     WidgetUrl,
@@ -107,8 +107,7 @@ export default Vue.extend({
         return this.$store.state.talks.selectedTalk
       },
       set (index: number) {
-        this.$store.commit('talks/SOCKET_SET_SELECTED_TALK', index)
-        this.$socket.client.emit('SET_SELECTED_TALK', index)
+        this.commitAndEmit('SET_SELECTED_TALK', 'talks', index)
       }
     },
     talk (): TalkType {
@@ -146,8 +145,7 @@ export default Vue.extend({
     localTalks: {
       deep: true,
       handler (newValue) {
-        this.$store.commit('talks/SOCKET_SET_TALKS', newValue)
-        this.$socket.client.emit('SET_TALKS', newValue)
+        this.commitAndEmit('SET_TALKS', 'talks', newValue)
       }
     }
   },

@@ -4,10 +4,6 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const path = require('path')
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/index.html'))
-})
-
 io.on('connection', (socket) => {
   console.log(`A user connected with socket id ${socket.id}`)
   socket.broadcast.emit('userConnected', socket.id)
@@ -29,6 +25,8 @@ io.on('connection', (socket) => {
     socket.broadcast.emit(event, data)
   })
 })
+
+
 http.listen(3000, () => {
   console.log('Listening on port *: 3000')
 })

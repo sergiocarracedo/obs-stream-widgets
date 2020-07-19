@@ -47,15 +47,15 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Widget from '@/mixins/Widget'
+import { CORRECT_POINTS_DEFAULT, CORRECT_POINTS } from './consts'
 import tmi from 'tmi.js'
 import { Map } from '@/types'
 import { Question, Answer, Question as QuestionType, QuestionState, RankingUser } from './types'
 import { mapState, createNamespacedHelpers } from 'vuex'
 const contestStateHelper = createNamespacedHelpers('contest')
-import { CORRECT_POINTS_DEFAULT, CORRECT_POINTS } from './consts'
 
-export default Vue.extend({
+export default Widget.extend({
   name: 'contest-execute',
   data () {
     return {
@@ -107,8 +107,7 @@ export default Vue.extend({
       )
     },
     async launchQuestion () {
-      this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
-      this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Active)
+      this.commitAndEmit('SET_CONTEST_STATUS_QUESTION_STATE', 'contest', QuestionState.Active)
       await this.client.say(this.twitch.channel, '=================')
       await this.client.say(this.twitch.channel, `${this.status.question.index + 1}. ${this.currentQuestion.title}`)
       await this.client.say(this.twitch.channel, '-----------------')
@@ -119,15 +118,20 @@ export default Vue.extend({
       this.client.on('chat', this.onMessage)
     },
     showRanking () {
-      this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Ranking)
-      this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Ranking)
+      this.commitAndEmit('SET_CONTEST_STATUS_QUESTION_STATE', 'contest', QuestionState.Ranking)
     },
     nextQuestion () {
       if (!this.isLastQuestion) {
-        this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_INDEX', this.status.question.index + 1)
-        this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_INDEX', this.status.question.index)
-        this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Ready)
-        this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Ready)
+        this.commitAndEmit(
+          'SET_CONTEST_STATUS_QUESTION_INDEX',
+          'contest',
+          this.status.question.index + 1
+        )
+        this.commitAndEmit(
+          'SET_CONTEST_STATUS_QUESTION_STATE',
+          'contest',
+          QuestionState.Ready
+        )
       }
     },
     async finishQuestion () {
@@ -135,8 +139,11 @@ export default Vue.extend({
       await this.client.say(this.twitch.channel, '====== Pregunta finalizada =====')
       this.answersRecount()
       this.currentQuestionAnswerUser = {}
-      this.$store.commit('contest/SOCKET_SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Finished)
-      this.$socket.client.emit('SET_CONTEST_STATUS_QUESTION_STATE', QuestionState.Finished)
+      this.commitAndEmit(
+        'SET_CONTEST_STATUS_QUESTION_STATE',
+        'contest',
+        QuestionState.Finished
+      )
     },
     resetContest () {
       this.$confirm(
@@ -144,8 +151,7 @@ export default Vue.extend({
         { title: 'Warning' }
       ).then((res: boolean | undefined) => {
         if (res) {
-          this.$store.commit('contest/SOCKET_CONTEST_RESET')
-          this.$socket.client.emit('CONTEST_RESET')
+          this.commitAndEmit('CONTEST_RESET', 'contest')
         }
       })
     },
@@ -186,8 +192,8 @@ export default Vue.extend({
       ranking.sort((a: RankingUser, b: RankingUser) => {
         return b.points - a.points
       })
-      this.$store.commit('contest/SOCKET_SET_CONTEST_RANKING', ranking)
-      this.$socket.client.emit('SET_CONTEST_RANKING', ranking)
+
+      this.commitAndEmit('SET_CONTEST_RANKING', 'contenst', ranking)
     }
   },
   async beforeMount () {

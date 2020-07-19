@@ -91,16 +91,16 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Widget from '@/mixins/Widget'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import CountdownWidget from './Countdown.vue'
 import dayjs from 'dayjs'
 import './CountdownSettings.scss'
-import {createNamespacedHelpers} from "vuex";
+import {createNamespacedHelpers} from 'vuex'
 const themeHelpers = createNamespacedHelpers('theme')
 const mapStateTheme = themeHelpers.mapState
 
-export default Vue.extend({
+export default Widget.extend({
   name: 'countdown-settings',
   components: {
     WidgetUrl,
@@ -128,8 +128,7 @@ export default Vue.extend({
           .set('month', +month - 1)
           .set('date', +day)
 
-        this.$store.commit('countdown/SOCKET_SET_TARGET_DATE', dateTime)
-        this.$socket.client.emit('SET_TARGET_DATE', dateTime)
+        this.commitAndEmit('SET_TARGET_DATE', 'countdown', dateTime)
       }
     },
     time: {
@@ -141,8 +140,7 @@ export default Vue.extend({
         const dateTime = dayjs(this.$store.state.countdown.targetDate || new Date())
           .set('hour', +hours)
           .set('minute', +minutes)
-        this.$store.commit('countdown/SOCKET_SET_TARGET_DATE', dateTime)
-        this.$socket.client.emit('SET_TARGET_DATE', dateTime)
+        this.commitAndEmit('SET_TARGET_DATE', 'countdown', dateTime)
       }
     },
     textBefore: {
@@ -150,8 +148,7 @@ export default Vue.extend({
         return this.$store.state.countdown.textBefore
       },
       set (value: string):void {
-        this.$store.commit('countdown/SOCKET_SET_TEXT_BEFORE', value)
-        this.$socket.client.emit('SET_TEXT_BEFORE', value)
+        this.commitAndEmit('SET_TEXT_BEFORE', 'countdown', value)
       }
     },
     textAfter: {
@@ -159,8 +156,7 @@ export default Vue.extend({
         return this.$store.state.countdown.textAfter
       },
       set (value: string):void {
-        this.$store.commit('countdown/SOCKET_SET_TEXT_AFTER', value)
-        this.$socket.client.emit('SET_TEXT_AFTER', value)
+        this.commitAndEmit('SET_TEXT_AFTER', 'countdown', value)
       }
     },
     widgetUrl () {

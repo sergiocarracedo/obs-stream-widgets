@@ -44,14 +44,14 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Widget from '@/mixins/Widget'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import SponsorsWidget from './Sponsors.vue'
 import './SponsorsSettings.scss'
 import { Sponsor as SponsorType } from './types'
 import UploadBtn from '@/components/UploadBtn.vue'
 
-export default Vue.extend({
+export default Widget.extend({
   name: 'sponsors-settings',
   components: {
     WidgetUrl,
@@ -89,8 +89,7 @@ export default Vue.extend({
     localSponsors: {
       deep: true,
       handler (newValue) {
-        this.$store.commit('sponsors/SOCKET_SET_SPONSORS', newValue)
-        this.$socket.client.emit('SET_SPONSORS', newValue)
+        this.commitAndEmit('SET_SPONSORS', 'sponsors', newValue)
       }
     }
   },

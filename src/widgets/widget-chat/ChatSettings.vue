@@ -27,13 +27,13 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Widget from '@/mixins/Widget'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import ChatWidget from './Chat.vue'
 import './ChatSettings.scss'
 import { mapState } from 'vuex'
 
-export default Vue.extend({
+export default Widget.extend({
   name: 'chat-settings',
   components: {
     WidgetUrl,

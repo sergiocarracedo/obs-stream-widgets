@@ -27,13 +27,13 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
+import Widget from '@/mixins/Widget'
 import WidgetUrl from '@/components/WidgetUrl.vue'
 import BrandWidget from './Brand.vue'
 import UploadBtn from '@/components/UploadBtn.vue'
 import './BrandSettings.scss'
 
-export default Vue.extend({
+export default Widget.extend({
   name: 'brand-settings',
   components: {
     WidgetUrl,
@@ -50,8 +50,7 @@ export default Vue.extend({
   },
   methods: {
     onUpload (image: File) {
-      this.$store.commit('brand/SOCKET_SET_LOGO', image)
-      this.$socket.client.emit('SET_LOGO', image)
+      this.commitAndEmit('SET_LOGO', 'brand', image)
     }
   }
 })
