@@ -18,9 +18,15 @@
       <v-btn v-if="status.question.state === QuestionState.Ready" @click="launchQuestion">
         Launch question
       </v-btn>
-      <v-btn v-if="status.question.state === QuestionState.Active" color="primary" @click="finishQuestion">
-        Finish question
-      </v-btn>
+
+      <template v-if="status.question.state === QuestionState.Active">
+        <v-btn v-if="!timePerQuestion" color="primary" @click="finishQuestion">
+          Finish question
+        </v-btn>
+        <span v-else>
+          Time Remaining: {{ timeRemaining }}s
+        </span>
+      </template>
       <v-btn
         v-if="status.question.state === QuestionState.Finished"
         color="primary"
@@ -53,6 +59,7 @@ import tmi from 'tmi.js'
 import { Map } from '@/types'
 import { Question, Answer, Question as QuestionType, QuestionState, RankingUser } from './types'
 import { mapState, createNamespacedHelpers } from 'vuex'
+import dayjs from 'dayjs'
 const contestStateHelper = createNamespacedHelpers('contest')
 
 export default Widget.extend({
@@ -61,12 +68,15 @@ export default Widget.extend({
     return {
       currentQuestionAnswerUser: {} as Map<any>,
       QuestionState,
-      client: null as any
+      client: null as any,
+      questionStartDate: 0,
+      timeRemaining: 0,
+      intervalId: null as null | number
     }
   },
   computed: {
     ...mapState(['twitch', 'platform']),
-    ...contestStateHelper.mapState(['questions', 'status']),
+    ...contestStateHelper.mapState(['questions', 'status', 'timePerQuestion']),
     currentQuestionIndex (): number | string {
       return this.status.question.index + 1
     },
@@ -115,6 +125,21 @@ export default Widget.extend({
         this.client.say(this.twitch.channel, `${String.fromCharCode(65 + index)}: ${answer.text}`)
       })
       await this.client.say(this.twitch.channel, '-----------------')
+
+      if (this.timePerQuestion > 0) {
+        this.timeRemaining = this.timePerQuestion
+        this.questionStartDate = +new Date()
+        setTimeout(() => {
+          this.finishQuestion()
+        }, this.timePerQuestion * 1000)
+
+        this.intervalId = setInterval(() => {
+          const startDate = dayjs(this.questionStartDate)
+          const currentDate = dayjs()
+          this.timeRemaining = this.timePerQuestion + startDate.diff(currentDate, 's')
+        }, 100)
+      }
+
       this.client.on('chat', this.onMessage)
     },
     showRanking () {
@@ -193,7 +218,7 @@ export default Widget.extend({
         return b.points - a.points
       })
 
-      this.commitAndEmit('SET_CONTEST_RANKING', 'contenst', ranking)
+      this.commitAndEmit('SET_CONTEST_RANKING', 'contest', ranking)
     }
   },
   async beforeMount () {

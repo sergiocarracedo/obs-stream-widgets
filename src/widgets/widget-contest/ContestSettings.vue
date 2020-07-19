@@ -3,29 +3,43 @@
     <v-card class="mb-8">
       <v-card-title class="heading">
         Contest
+        <v-spacer></v-spacer>
+        <v-btn @click="onImportClick">
+          <v-icon left>mdi-cloud-upload</v-icon>
+          Import
+        </v-btn>
+        <input
+          ref="uploader"
+          class="d-none"
+          type="file"
+          accept="text/json"
+          @change="onFileChanged"
+        >
+        <v-btn :href="downloadStateUrl" download="obs-stream-widgets-questions.json" class="ml-2 mr-2">
+          <v-icon left>mdi-cloud-download</v-icon>Export
+        </v-btn>
       </v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" lg="6">
             <widget-url :url="widgetUrl"></widget-url>
           </v-col>
-          <v-col cols="12" lg="6" class="pt-5">
-            Questions
-            <v-btn :href="downloadStateUrl" download="obs-stream-widgets-questions.json" class="ml-2 mr-2">
-              <v-icon left>mdi-cloud-download</v-icon>Export
-            </v-btn>
-
-            <v-btn @click="onImportClick">
-              <v-icon left>mdi-cloud-upload</v-icon>
-              Import
-            </v-btn>
-            <input
-              ref="uploader"
-              class="d-none"
-              type="file"
-              accept="text/json"
-              @change="onFileChanged"
+          <v-col cols="12" lg="6" class="pt-6">
+            <v-slider
+              v-if="!contestActive"
+              v-model="timePerQuestion"
+              :min="0"
+              :max="60"
+              label="Time to answer question"
+              hint="0 for manual"
+              append-icon="mdi-clock"
+              thumb-label="always"
             >
+              <template v-slot:thumb-label="{ value }">
+                {{ value }}s
+              </template>
+
+            </v-slider>
           </v-col>
         </v-row>
 
@@ -121,6 +135,14 @@ export default Widget.extend({
       },
       set (active: boolean) {
         this.commitAndEmit('SET_CONTEST_ACTIVE', 'contest', active)
+      }
+    },
+    timePerQuestion: {
+      get (): number {
+        return this.$store.state.contest.timePerQuestion
+      },
+      set (time: number) {
+        this.commitAndEmit('SET_TIME_PER_QUESTION', 'contest', time)
       }
     },
     downloadStateUrl (): string {

@@ -6,7 +6,8 @@ import { Question, ContestStatus, RankingUser, QuestionState } from './types'
 const question = {
   index: 0,
   state: QuestionState.Ready,
-  answered: 0
+  answered: 0,
+  timePerQuestion: 20
 }
 
 const state: Map<any> = {
@@ -19,6 +20,9 @@ const state: Map<any> = {
 }
 
 const mutations: MutationTree<Map<any>> = {
+  SOCKET_SET_TIME_PER_QUESTION: (state: any, time: number) => {
+    state.timePerQuestion = time
+  },
   SOCKET_SET_QUESTIONS: (state: any, questions: Question[]) => {
     state.questions = questions
   },
