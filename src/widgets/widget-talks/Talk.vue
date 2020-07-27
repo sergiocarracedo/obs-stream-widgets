@@ -1,7 +1,7 @@
 <template>
-  <div :class="classes">
+  <div :class="classes" v-if="talk">
     <div class="talk">
-      <div class="speaker">
+      <div class="speaker" v-if="talk.speaker">
         <div class="picture-wrapper primary-light-bg primary-border" v-if="talk.speaker.picture" :style="{ backgroundImage: `url(${talk.speaker.picture})` }">
         </div>
         <h3 class="primary-light-color">{{ talk.speaker.name }}</h3>
