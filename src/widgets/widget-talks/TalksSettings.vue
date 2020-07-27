@@ -104,7 +104,7 @@ export default Widget.extend({
     },
     selectedTalk: {
       get (): number {
-        return this.$store.state.talks.selectedTalk
+        return this.$store.state.talks.selectedTalk || 0
       },
       set (index: number) {
         this.commitAndEmit('SET_SELECTED_TALK', 'talks', index)
