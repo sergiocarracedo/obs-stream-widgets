@@ -72,7 +72,7 @@
           </v-row>
           <v-row>
             <v-col v-for="(answer, index) in question.answers" :key="index" cols="12" lg="6" class="d-flex">
-              <v-text-field filled :label="`Anwser ${index + 1}`" v-model="question.answers[index].text" class="mr-3"></v-text-field>
+              <v-text-field filled :label="`Answer ${index + 1}`" v-model="question.answers[index].text" class="mr-3"></v-text-field>
               <v-checkbox label="Correct" v-model="question.answers[index].correct"></v-checkbox>
             </v-col>
           </v-row>
