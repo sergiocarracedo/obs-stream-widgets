@@ -4,6 +4,7 @@
     <ul>
       <li
         v-for="(item, index) in localRanking"
+        :key="index"
         :class="classes(index)">
         <strong>{{ index + 1 }}</strong>
         {{ item.name }}
