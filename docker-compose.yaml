@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  node_obs_stream_widgets:
+    build: ./
+    image: obs_stream_widgets
+    container_name: obs_stream_widgets
+    command: [bash, -c, "yarn start"]
+    ports:
+      - 8081:8081
