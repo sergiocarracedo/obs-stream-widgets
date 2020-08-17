@@ -1,17 +1,35 @@
 # Obs Stream Widgets
 
-## Project setup
+## Project setup (without `docker-compose`)
+
+### Install dependencies
 ```
 yarn
 ```
 
-### Run APP and server
+### Run application and server
 ```
 yarn start
 ```
 
+Default address: http://localhost:8081
 
-### Create a widget
+## Project setup (with `docker-compose`) 
+
+To run application with `docker-compose`
+
+```
+docker-compose up
+```
+
+Remember to rebuild image if code changes with
+```
+docker-compose build
+```
+
+Exposed address: http://localhost:8081
+
+## Create a widget
 ```
 WIP
 ```
@@ -28,7 +46,6 @@ export default {
 }
 
 ```
-
 
 
 
