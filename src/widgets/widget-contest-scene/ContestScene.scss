@@ -4,4 +4,16 @@
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  .grid-row {
+    display: flex;
+  }
+
+  .scene-chat {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    .chat {
+      height: 80vh;
+    }
+  }
 }
