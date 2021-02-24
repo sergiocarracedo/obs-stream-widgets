@@ -1,0 +1,6 @@
+{
+  "name": "Contest Scene",
+  "icon": "mdi-seal",
+  "id": "contest-scene",
+  "depends": ["contest", "chat"]
+}

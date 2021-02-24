@@ -5,6 +5,7 @@ import * as countdown from '@/widgets/widget-countdown'
 import * as followers from '@/widgets/widget-followers'
 import * as talks from '@/widgets/widget-talks'
 import * as contest from '@/widgets/widget-contest'
+import * as contestScene from '@/widgets/widget-contest-scene'
 
 export default {
   widgets: {
@@ -14,6 +15,7 @@ export default {
     'sponsors': sponsors,
     'countdown': countdown,
     'talks': talks,
-    'contest': contest
+    'contest': contest,
+    'contest-scene': contestScene
   }
 }

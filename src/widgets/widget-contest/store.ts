@@ -2,7 +2,6 @@ import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { Map } from '@/types'
 import { Question, ContestStatus, RankingUser, QuestionState } from './types'
 
-
 const question = {
   index: 0,
   state: QuestionState.Ready,

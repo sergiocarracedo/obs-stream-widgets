@@ -15,7 +15,7 @@
       </v-card-text>
     </v-card>
 
-    <v-card class="mb-8">
+    <v-card class="mb-8" v-if="localPlatform === 'youtube'">
       <v-card-title class="heading">
         YouTube
       </v-card-title>
@@ -39,26 +39,12 @@
       </v-card-text>
     </v-card>
 
-    <v-card class="mb-8">
+    <v-card class="mb-8" v-if="localPlatform === 'twitch'">
       <v-card-title class="heading">
         Twitch
       </v-card-title>
       <v-card-text>
         <v-row>
-          <v-col cols="12" lg="6">
-            <v-text-field
-              label="Client ID"
-              filled
-              v-model="localTwitch.clientId"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <v-text-field
-              label="Client Secret"
-              filled
-              v-model="localTwitch.clientSecret"
-            ></v-text-field>
-          </v-col>
           <v-col cols="12" lg="6">
             <v-text-field
               label="Channel"
@@ -71,6 +57,8 @@
               label="Oauth"
               filled
               v-model="localTwitch.oauth"
+              hint="You can get from https://twitchapps.com/tmi/"
+              persistent-hint
             ></v-text-field>
           </v-col>
         </v-row>
